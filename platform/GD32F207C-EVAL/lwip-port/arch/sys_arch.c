@@ -48,22 +48,22 @@ LARGE_INTEGER freq, sys_start_time;
 
 u32_t sys_jiffies(void)
 {
-  return (u32_t)sys_get_ms_longlong();
+    return (u32_t)sys_get_ms_longlong();
 }
 
 u32_t sys_now(void)
 {
-  return (u32_t)LOS_TickCountGet();
+    return (u32_t)LOS_TickCountGet();
 }
 
 sys_prot_t sys_arch_protect(void)
 {
-  return LOS_IntLock();
+    return LOS_IntLock();
 }
 
 void sys_arch_unprotect(sys_prot_t pval)
 {
-  LOS_IntRestore(pval);
+    LOS_IntRestore(pval);
 }
 
 void sys_init(void)
@@ -74,171 +74,397 @@ void sys_init(void)
 #if !NO_SYS
 
 struct threadlist {
-  lwip_thread_fn function;
-  void *arg;
-  DWORD id;
-  struct threadlist *next;
+    lwip_thread_fn function;
+    void *arg;
+    DWORD id;
+    struct threadlist *next;
 };
 
 struct threadlist *lwip_win32_threads = NULL;
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_sem_new
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Creates and returns a new semaphore. The "count" argument specifies
+ *      the initial state of the semaphore.
+ *      NOTE: Currently this routine only creates counts of 1 or 0
+ * Inputs:
+ *      sys_sem_t *sem            -- Handle of semaphore
+ *      u8_t count              -- Initial count of semaphore (1 or 0)
+ * Outputs:
+ *      sys_sem_t               -- Created semaphore or 0 if could not create.
+ *---------------------------------------------------------------------------*/
 err_t sys_sem_new(sys_sem_t *sem, u8_t count)
 {
-  HANDLE new_sem = NULL;
+    err_t ret = ERR_MEM;
+    UINT32 uwRet;
 
-  UINT32 uwRet;
-
-  LWIP_ASSERT("sem != NULL", sem != NULL);
+    LWIP_ASSERT("sem != NULL", sem != NULL);
   
-  uwRet = LOS_SemPend(g_usSemID, LOS_WAIT_FOREVER);
-  /*申请到信号量*/
-  if(LOS_OK == uwRet)
-  {
-    if(count == 0UL)
+    /* create mutex */
+    if(LOS_MuxCreate(sem) != LOS_OK);
     {
-
-    }
-  new_sem = CreateSemaphore(0, count, 100000, 0);
-  LWIP_ASSERT("Error creating semaphore", new_sem != NULL);
-  if(new_sem != NULL) {
-    SYS_STATS_INC_USED(sem);
-#if LWIP_STATS && SYS_STATS
-    LWIP_ASSERT("sys_sem_new() counter overflow", lwip_stats.sys.sem.used != 0 );
-#endif /* LWIP_STATS && SYS_STATS*/
-    sem->sem = new_sem;
-    return ERR_OK;
-  }
-   
-  /* failed to allocate memory... */
-  SYS_STATS_INC(sem.err);
-  sem->sem = NULL;
-  return ERR_MEM;
-}
-
-void sys_sem_free(sys_sem_t *sem)
-{
-  /* parameter check */
-  LWIP_ASSERT("sem != NULL", sem != NULL);
-  LWIP_ASSERT("sem->sem != NULL", sem->sem != NULL);
-  LWIP_ASSERT("sem->sem != INVALID_HANDLE_VALUE", sem->sem != INVALID_HANDLE_VALUE);
-  CloseHandle(sem->sem);
-
-  SYS_STATS_DEC(sem.used);
-#if LWIP_STATS && SYS_STATS
-  LWIP_ASSERT("sys_sem_free() closed more than created", lwip_stats.sys.sem.used != (u16_t)-1);
-#endif /* LWIP_STATS && SYS_STATS */
-  sem->sem = NULL;
-}
-
-u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout)
-{
-  DWORD ret;
-  LONGLONG starttime, endtime;
-  LWIP_ASSERT("sem != NULL", sem != NULL);
-  LWIP_ASSERT("sem->sem != NULL", sem->sem != NULL);
-  LWIP_ASSERT("sem->sem != INVALID_HANDLE_VALUE", sem->sem != INVALID_HANDLE_VALUE);
-  if(!timeout)
-  {
-    /* wait infinite */
-    starttime = sys_get_ms_longlong();
-    ret = WaitForSingleObject(sem->sem, INFINITE);
-    LWIP_ASSERT("Error waiting for semaphore", ret == WAIT_OBJECT_0);
-    endtime = sys_get_ms_longlong();
-    /* return the time we waited for the sem */
-    return (u32_t)(endtime - starttime);
-  }
-  else
-  {
-    starttime = sys_get_ms_longlong();
-    ret = WaitForSingleObject(sem->sem, timeout);
-    LWIP_ASSERT("Error waiting for semaphore", (ret == WAIT_OBJECT_0) || (ret == WAIT_TIMEOUT));
-    if(ret == WAIT_OBJECT_0)
-    {
-      endtime = sys_get_ms_longlong();
-      /* return the time we waited for the sem */
-      return (u32_t)(endtime - starttime);
+        ret = ERR_MEM;
+        //SYS_STATS_INC(sem.err);
     }
     else
     {
-      /* timeout */
-      return SYS_ARCH_TIMEOUT;
+        ret = ERR_OK;
+        //SYS_STATS_INC_USED(sem);
     }
-  }
+
+    if(count == 0UL)
+    {
+        /* get the mutex */
+        if(LOS_MuxPend(*sem, LOS_WAIT_FOREVER) != LOS_OK)
+        {
+            ret = ERR_MEM;
+            //SYS_STATS_INC(sem.err);
+        }
+        else
+        {
+            ret = ERR_OK;
+        }
+    }
+
+    return ret;
 }
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_sem_free
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Deallocates a semaphore
+ * Inputs:
+ *      sys_sem_t *sem           -- Semaphore to free
+ *---------------------------------------------------------------------------*/
+void sys_sem_free(sys_sem_t *sem)
+{
+    /* parameter check */
+    LWIP_ASSERT("sem != NULL", sem != NULL);
+    
+    // SYS_STATS_DEC(sem.used);
+    LOS_MuxDelete(*sem);
+}
+
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_sem_signal
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Signals (releases) a semaphore
+ * Inputs:
+ *      sys_sem_t sem           -- Semaphore to signal
+ *---------------------------------------------------------------------------*/
 void sys_sem_signal(sys_sem_t *sem)
 {
-  DWORD ret;
-  LWIP_ASSERT("sem != NULL", sem != NULL);
-  LWIP_ASSERT("sem->sem != NULL", sem->sem != NULL);
-  LWIP_ASSERT("sem->sem != INVALID_HANDLE_VALUE", sem->sem != INVALID_HANDLE_VALUE);
-  ret = ReleaseSemaphore(sem->sem, 1, NULL);
-  LWIP_ASSERT("Error releasing semaphore", ret != 0);
-  LWIP_UNUSED_ARG(ret);
+    LOS_MuxPost(*sem);
+}
+
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_arch_sem_wait
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Blocks the thread while waiting for the semaphore to be
+ *      signaled. If the "timeout" argument is non-zero, the thread should
+ *      only be blocked for the specified time (measured in
+ *      milliseconds).
+ *
+ *      If the timeout argument is non-zero, the return value is the number of
+ *      milliseconds spent waiting for the semaphore to be signaled. If the
+ *      semaphore wasn't signaled within the specified time, the return value is
+ *      SYS_ARCH_TIMEOUT. If the thread didn't have to wait for the semaphore
+ *      (i.e., it was already signaled), the function may return zero.
+ *
+ *      Notice that lwIP implements a function with a similar name,
+ *      sys_sem_wait(), that uses the sys_arch_sem_wait() function.
+ * Inputs:
+ *      sys_sem_t sem           -- Semaphore to wait on
+ *      u32_t timeout           -- Number of milliseconds until timeout
+ * Outputs:
+ *      u32_t                   -- Time elapsed or SYS_ARCH_TIMEOUT.
+ *---------------------------------------------------------------------------*/
+u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout)
+{
+    u32_t ret;
+    UINT64 time_start, time_end, time_diff;
+
+    time_start = LOS_TickCountGet();
+    
+    if( timeout != 0UL )
+    {
+        if(LOS_MuxPend(*sem, timeout) == LOS_OK)
+        {
+            time_end = LOS_TickCountGet();
+            time_diff = time_end - time_start;
+            ret = time_diff;
+        }
+        else
+        {
+            ret = SYS_ARCH_TIMEOUT;
+        }
+    }
+    else
+    {
+        LOS_MuxPend(*sem, LOS_WAIT_FOREVER);
+        time_end = LOS_TickCountGet();
+        time_diff = time_end - time_start;
+        ret = time_diff;
+    }
+
+    return ret;
 }
 
 err_t sys_mutex_new(sys_mutex_t *mutex)
 {
-  HANDLE new_mut = NULL;
-
-  LWIP_ASSERT("mutex != NULL", mutex != NULL);
-
-  new_mut = CreateMutex(NULL, FALSE, NULL);
-  LWIP_ASSERT("Error creating mutex", new_mut != NULL);
-  if(new_mut != NULL) {
-    SYS_STATS_INC_USED(mutex);
-#if LWIP_STATS && SYS_STATS
-    LWIP_ASSERT("sys_mutex_new() counter overflow", lwip_stats.sys.mutex.used != 0 );
-#endif /* LWIP_STATS && SYS_STATS*/
-    mutex->mut = new_mut;
-    return ERR_OK;
-  }
-   
-  /* failed to allocate memory... */
-  SYS_STATS_INC(mutex.err);
-  mutex->mut = NULL;
-  return ERR_MEM;
+    return sys_sem_new((sys_sem_t *)mutex);
 }
 
 void sys_mutex_free(sys_mutex_t *mutex)
 {
-  /* parameter check */
-  LWIP_ASSERT("mutex != NULL", mutex != NULL);
-  LWIP_ASSERT("mutex->mut != NULL", mutex->mut != NULL);
-  LWIP_ASSERT("mutex->mut != INVALID_HANDLE_VALUE", mutex->mut != INVALID_HANDLE_VALUE);
-  CloseHandle(mutex->mut);
-
-  SYS_STATS_DEC(mutex.used);
-#if LWIP_STATS && SYS_STATS
-  LWIP_ASSERT("sys_mutex_free() closed more than created", lwip_stats.sys.mutex.used != (u16_t)-1);
-#endif /* LWIP_STATS && SYS_STATS */
-  mutex->mut = NULL;
+    sys_sem_free((sys_sem_t *)mutex);
 }
 
 void sys_mutex_lock(sys_mutex_t *mutex)
 {
-  DWORD ret;
-  LWIP_ASSERT("mutex != NULL", mutex != NULL);
-  LWIP_ASSERT("mutex->mut != NULL", mutex->mut != NULL);
-  LWIP_ASSERT("mutex->mut != INVALID_HANDLE_VALUE", mutex->mut != INVALID_HANDLE_VALUE);
-  /* wait infinite */
-  ret = WaitForSingleObject(mutex->mut, INFINITE);
-  LWIP_ASSERT("Error waiting for mutex", ret == WAIT_OBJECT_0);
-  LWIP_UNUSED_ARG(ret);
+    sys_arch_sem_wait((sys_sem_t *)mutex, 0);
 }
 
 void sys_mutex_unlock(sys_mutex_t *mutex)
 {
-  LWIP_ASSERT("mutex != NULL", mutex != NULL);
-  LWIP_ASSERT("mutex->mut != NULL", mutex->mut != NULL);
-  LWIP_ASSERT("mutex->mut != INVALID_HANDLE_VALUE", mutex->mut != INVALID_HANDLE_VALUE);
-  /* wait infinite */
-  if(!ReleaseMutex(mutex->mut))
-  {
-    LWIP_ASSERT("Error releasing mutex", 0);
-  }
+    sys_sem_signal((sys_sem_t *)mutex);
 }
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mbox_new
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Creates a new mailbox
+ * Inputs:
+ *      int size                -- Size of elements in the mailbox
+ * Outputs:
+ *      sys_mbox_t              -- Handle to new mailbox
+ *---------------------------------------------------------------------------*/
+err_t sys_mbox_new( sys_mbox_t *q, int size )
+{
+    err_t ret = ERR_MEM;
+
+    /* parameter check */
+    LWIP_ASSERT("q != NULL", q != NULL);
+    LWIP_ASSERT("size != NULL", size != NULL);
+
+    if(LOS_QueueCreate("", size, q, sizeof(void *)) == LOS_OK)
+    {
+        ret = ERR_OK;
+        //SYS_STATS_INC_USED(mbox);
+    }
+    
+    return ret;
+}
+
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mbox_free
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Deallocates a mailbox. If there are messages still present in the
+ *      mailbox when the mailbox is deallocated, it is an indication of a
+ *      programming error in lwIP and the developer should be notified.
+ * Inputs:
+ *      sys_mbox_t mbox         -- Handle of mailbox
+ * Outputs:
+ *      sys_mbox_t              -- Handle to new mailbox
+ *---------------------------------------------------------------------------*/
+void sys_mbox_free( sys_mbox_t *q )
+{
+    LWIP_ASSERT("q != NULL", q != NULL);
+    
+    while (LOS_QueueDelete(*q) != LOS_OK)
+    {
+        LOS_TaskDelay(1);
+    }
+}
+
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mbox_post
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Post the "msg" to the mailbox.
+ * Inputs:
+ *      sys_mbox_t mbox         -- Handle of mailbox
+ *      void *data              -- Pointer to data to post
+ *---------------------------------------------------------------------------*/
+void sys_mbox_post(sys_mbox_t *q, void *data)
+{
+    LWIP_ASSERT("q != NULL", q != NULL);
+
+    LOS_QueueWrite(*q, data, sizeof(void *), LOS_WAIT_FOREVER);
+}
+
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mbox_trypost
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Try to post the "msg" to the mailbox.  Returns immediately with
+ *      error if cannot.
+ * Inputs:
+ *      sys_mbox_t mbox         -- Handle of mailbox
+ *      void *msg               -- Pointer to data to post
+ * Outputs:
+ *      err_t                   -- ERR_OK if message posted, else ERR_MEM
+ *                                  if not.
+ *---------------------------------------------------------------------------*/
+err_t sys_mbox_trypost(sys_mbox_t *q, void *data)
+{
+    err_t ret = ERR_OK;
+
+    LWIP_ASSERT("q != NULL", q != NULL);
+
+    if(LOS_QueueWrite(*q, data, sizeof(void *), LOS_NO_WAIT) != LOS_OK)
+    {
+        /* The queue was already full. */
+        ret = ERR_MEM;
+        SYS_STATS_INC( mbox.err );
+    }
+
+    return ret;
+}
+
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_arch_mbox_fetch
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Blocks the thread until a message arrives in the mailbox, but does
+ *      not block the thread longer than "timeout" milliseconds (similar to
+ *      the sys_arch_sem_wait() function). The "msg" argument is a result
+ *      parameter that is set by the function (i.e., by doing "*msg =
+ *      ptr"). The "msg" parameter maybe NULL to indicate that the message
+ *      should be dropped.
+ *
+ *      The return values are the same as for the sys_arch_sem_wait() function:
+ *      Number of milliseconds spent waiting or SYS_ARCH_TIMEOUT if there was a
+ *      timeout.
+ *
+ *      Note that a function with a similar name, sys_mbox_fetch(), is
+ *      implemented by lwIP.
+ * Inputs:
+ *      sys_mbox_t mbox         -- Handle of mailbox
+ *      void **msg              -- Pointer to pointer to msg received
+ *      u32_t timeout           -- Number of milliseconds until timeout
+ * Outputs:
+ *      u32_t                   -- SYS_ARCH_TIMEOUT if timeout, else number
+ *                                  of milliseconds until received.
+ *---------------------------------------------------------------------------*/
+u32_t sys_arch_mbox_fetch( sys_mbox_t *q, void **data, u32_t timeout )
+{
+	void *pvDummy;
+	portTickType xStartTime, xEndTime, xElapsed;
+	unsigned long ulReturn;
+
+	xStartTime = xTaskGetTickCount();
+
+	if( NULL == ppvBuffer )
+	{
+		ppvBuffer = &pvDummy;
+	}
+
+	if( ulTimeOut != 0UL )
+	{
+		if( pdTRUE == xQueueReceive( *pxMailBox, &( *ppvBuffer ), ulTimeOut/ portTICK_RATE_MS ) )
+		{
+			xEndTime = xTaskGetTickCount();
+			xElapsed = ( xEndTime - xStartTime ) * portTICK_RATE_MS;
+
+			ulReturn = xElapsed;
+		}
+		else
+		{
+			/* Timed out. */
+			*ppvBuffer = NULL;
+			ulReturn = SYS_ARCH_TIMEOUT;
+		}
+	}
+	else
+	{
+		while( pdTRUE != xQueueReceive( *pxMailBox, &( *ppvBuffer ), portMAX_DELAY ) );
+		xEndTime = xTaskGetTickCount();
+		xElapsed = ( xEndTime - xStartTime ) * portTICK_RATE_MS;
+
+		if( xElapsed == 0UL )
+		{
+			xElapsed = 1UL;
+		}
+
+		ulReturn = xElapsed;
+	}
+
+	return ulReturn;
+
+    u32_t ret;
+    UINT64 time_start, time_end, time_diff;
+
+    LWIP_ASSERT("q != NULL", q != NULL);
+
+    time_start = LOS_TickCountGet();
+    
+    if(timeout != 0UL)
+    {
+        if(LOS_QueueRead(*q, timeout) == LOS_OK)
+        {
+            time_end = LOS_TickCountGet();
+            time_diff = time_end - time_start;
+            ret = time_diff;
+        }
+        else
+        {
+            ret = SYS_ARCH_TIMEOUT;
+        }
+    }
+    else
+    {
+        LOS_MuxPend(*sem, LOS_WAIT_FOREVER);
+        time_end = LOS_TickCountGet();
+        time_diff = time_end - time_start;
+        ret = time_diff;
+    }
+
+    return ret;
+}
+
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_arch_mbox_tryfetch
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Similar to sys_arch_mbox_fetch, but if message is not ready
+ *      immediately, we'll return with SYS_MBOX_EMPTY.  On success, 0 is
+ *      returned.
+ * Inputs:
+ *      sys_mbox_t mbox         -- Handle of mailbox
+ *      void **msg              -- Pointer to pointer to msg received
+ * Outputs:
+ *      u32_t                   -- SYS_MBOX_EMPTY if no messages.  Otherwise,
+ *                                  return ERR_OK.
+ *---------------------------------------------------------------------------*/
+u32_t sys_arch_mbox_tryfetch( sys_mbox_t *pxMailBox, void **ppvBuffer )
+{
+	void *pvDummy;
+	unsigned long ulReturn;
+
+	if( ppvBuffer== NULL )
+	{
+		ppvBuffer = &pvDummy;
+	}
+
+	if( pdTRUE == xQueueReceive( *pxMailBox, &( *ppvBuffer ), 0UL ) )
+	{
+		ulReturn = ERR_OK;
+	}
+	else
+	{
+		ulReturn = SYS_MBOX_EMPTY;
+	}
+
+	return ulReturn;
+}
 
 #ifdef _MSC_VER
 const DWORD MS_VC_EXCEPTION=0x406D1388;
