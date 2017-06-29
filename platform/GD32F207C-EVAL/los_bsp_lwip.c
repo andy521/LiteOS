@@ -4,18 +4,20 @@
 #include "lwip/udp.h"
 #include "netif/etharp.h"
 #include "lwip/dhcp.h"
+#include "lwip/tcpip.h"
 #include "ethernetif.h"
 #include "stdint.h"
-#include "main.h"
-#include "netconf.h"
 #include <stdio.h>
 #include "lwip/timeouts.h"
 #include "lwip/priv/tcp_priv.h"
+#include "ethernetif.h"
 
 struct netif netif;
 uint32_t tcp_timer = 0;
 uint32_t arp_timer = 0;
 ip_addr_t ip_address = {0};
+
+int errno = 0;
 
 void LOS_EvbLwipInit(void)
 {
@@ -23,6 +25,9 @@ void LOS_EvbLwipInit(void)
     ip_addr_t netmask;
     ip_addr_t gw;
 
+    /* init the tcpip */
+    tcpip_init( NULL, NULL );
+    
     /* initializes the dynamic memory heap defined by MEM_SIZE */
     mem_init();
 
@@ -38,9 +43,9 @@ void LOS_EvbLwipInit(void)
     netmask.addr = 0;
     gw.addr = 0;
 #else
-    IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
-    IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1 , NETMASK_ADDR2, NETMASK_ADDR3);
-    IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
+    IP4_ADDR(&ipaddr, 192, 168, 0, 211);
+    IP4_ADDR(&netmask, 255, 255 , 255, 0);
+    IP4_ADDR(&gw, 192, 168, 0, 1);
 
 #endif /* USE_DHCP */
 
@@ -56,11 +61,23 @@ void LOS_EvbLwipInit(void)
 
     The init function pointer must point to a initialization function for
     your ethernet netif interface. The following code illustrates it's use.*/
-    netif_add(&netif, &ipaddr, &netmask, &gw, NULL, &ethernetif_init, &ethernet_input);
+    netif_add(&netif, &ipaddr, &netmask, &gw, NULL, &ethernetif_init, tcpip_input);
 
     /* registers the default network interface */
     netif_set_default(&netif);
 
     /* when the netif is fully configured this function must be called */
     netif_set_up(&netif);
+}
+
+/*!
+    \brief      called when a frame is received
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+void lwip_pkt_handle(void)
+{
+    /* read a received packet from the Ethernet buffers and send it to the lwIP for handling */
+    ethernetif_input(&netif);
 }

@@ -33,26 +33,18 @@
 #define LWIP_LWIPOPTS_H
 
 #define LWIP_IPV4                  1
-#define LWIP_IPV6                  1
+#define LWIP_IPV6                  0
 
 #define NO_SYS                     0
 #define LWIP_SOCKET               (NO_SYS==0)
 #define LWIP_NETCONN              (NO_SYS==0)
 
-#define LWIP_IGMP                  LWIP_IPV4
 #define LWIP_ICMP                  LWIP_IPV4
 
-#define LWIP_SNMP                  LWIP_UDP
-#define MIB2_STATS                 LWIP_SNMP
+#define LWIP_DNS                   0
 
-#define LWIP_DNS                   LWIP_UDP
-#define LWIP_MDNS_RESPONDER        LWIP_UDP
-
-#define LWIP_NUM_NETIF_CLIENT_DATA (LWIP_MDNS_RESPONDER)
-
-#define LWIP_HAVE_LOOPIF           1
-#define LWIP_NETIF_LOOPBACK        1
-#define LWIP_LOOPBACK_MAX_PBUFS    10
+#define LWIP_HAVE_LOOPIF           0
+#define LWIP_NETIF_LOOPBACK        0
 
 #define TCP_LISTEN_BACKLOG         1
 
@@ -109,7 +101,7 @@
 
 /* MEM_SIZE: the size of the heap memory. If the application will send
 a lot of data that needs to be copied, this should be set high. */
-#define MEM_SIZE               10240
+#define MEM_SIZE               (40*1024)
 
 /* MEMP_NUM_PBUF: the number of memp struct pbufs. If the application
    sends a lot of data out of ROM (or other static memory), this
@@ -165,7 +157,6 @@ a lot of data that needs to be copied, this should be set high. */
  */
 #define SYS_LIGHTWEIGHT_PROT    (NO_SYS==0)
 
-
 /* ---------- TCP options ---------- */
 #define LWIP_TCP                1
 #define TCP_TTL                 255
@@ -175,10 +166,10 @@ a lot of data that needs to be copied, this should be set high. */
 #define TCP_QUEUE_OOSEQ         1
 
 /* TCP Maximum segment size. */
-#define TCP_MSS                 1024
+#define TCP_MSS                 (1500 - 40)
 
 /* TCP sender buffer space (bytes). */
-#define TCP_SND_BUF             2048
+#define TCP_SND_BUF             ( 2 * TCP_MSS )
 
 /* TCP sender buffer space (pbufs). This must be at least = 2 *
    TCP_SND_BUF/TCP_MSS for things to work. */
@@ -209,7 +200,7 @@ a lot of data that needs to be copied, this should be set high. */
 /* Define IP_FORWARD to 1 if you wish to have the ability to forward
    IP packets across network interfaces. If you are going to run lwIP
    on a device with only one network interface, define this to 0. */
-#define IP_FORWARD              1
+#define IP_FORWARD              0
 
 /* IP reassembly and segmentation.These are orthogonal even
  * if they both deal with IP fragments */
@@ -247,7 +238,15 @@ a lot of data that needs to be copied, this should be set high. */
 /* ---------- RAW options ---------- */
 #define LWIP_RAW                1
 
+#define TCPIP_MBOX_SIZE         20
 
+#define TCPIP_THREAD_STACKSIZE  1024
+#define DEFAULT_UDP_RECVMBOX_SIZE       16
+#define DEFAULT_TCP_RECVMBOX_SIZE       16
+#define DEFAULT_ACCEPTMBOX_SIZE         16
+#define TCPIP_THREAD_PRIO               3 
+
+//#define MEMP_NUM_NETCONN                16
 /* ---------- Statistics options ---------- */
 
 #define LWIP_STATS              1
@@ -267,31 +266,14 @@ a lot of data that needs to be copied, this should be set high. */
 #define SYS_STATS               1
 #endif /* LWIP_STATS */
 
-
-/* ---------- PPP options ---------- */
-
-#define PPP_SUPPORT             1      /* Set > 0 for PPP */
-
-#if PPP_SUPPORT
-
-#define NUM_PPP                 1      /* Max PPP sessions. */
-
-
-/* Select modules to enable.  Ideally these would be set in the makefile but
- * we're limited by the command line length so you need to modify the settings
- * in this file.
- */
-#define PPPOE_SUPPORT           1
-#define PPPOS_SUPPORT           1
-
-#define PAP_SUPPORT             1      /* Set > 0 for PAP. */
-#define CHAP_SUPPORT            1      /* Set > 0 for CHAP. */
-#define MSCHAP_SUPPORT          0      /* Set > 0 for MSCHAP */
-#define CBCP_SUPPORT            0      /* Set > 0 for CBCP (NOT FUNCTIONAL!) */
-#define CCP_SUPPORT             0      /* Set > 0 for CCP */
-#define VJ_SUPPORT              1      /* Set > 0 for VJ header compression. */
-#define MD5_SUPPORT             1      /* Set > 0 for MD5 (see also CHAP) */
-
-#endif /* PPP_SUPPORT */
+#define LWIP_DEBUG              0
+#define TCP_DEBUG                       LWIP_DBG_OFF
+#define ETHARP_DEBUG                    LWIP_DBG_OFF
+#define PBUF_DEBUG                      LWIP_DBG_OFF
+#define IP_DEBUG                        LWIP_DBG_OFF
+#define TCPIP_DEBUG                     LWIP_DBG_OFF
+#define DHCP_DEBUG                      LWIP_DBG_OFF
+#define UDP_DEBUG                       LWIP_DBG_OFF
+#define ICMP_DEBUG						LWIP_DBG_OFF
 
 #endif /* LWIP_LWIPOPTS_H */

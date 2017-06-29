@@ -46,8 +46,6 @@
 #define BYTE_ORDER LITTLE_ENDIAN
 #endif /* BYTE_ORDER */
 
-typedef UINTPTR sys_prot_t;
-
 #ifdef _MSC_VER
 /* define _INTPTR for Win32 MSVC stdint.h */
 #define _INTPTR 2

@@ -193,6 +193,8 @@ void LOS_EvbSetup(void)
     LOS_EvbUartInit();
     LOS_EvbLedInit();
     LOS_EvbKeyInit();
+    LOS_EvbEthInit();
+    LOS_EvbLwipInit();
     return;
 }
 

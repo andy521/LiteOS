@@ -40,13 +40,15 @@
 #include "netif/etharp.h"
 #include "ethernetif.h"
 #include "gd32f20x_enet.h"
-#include "main.h"
+
 #include <string.h>
 
 
 /* network interface name */
 #define IFNAME0 'G'
 #define IFNAME1 'D'
+
+#define MAC_ADDR    "\xF4\x83\xE1\x01\x01\x14"
 
 /* ENET RxDMA/TxDMA descriptor */
 extern enet_descriptors_struct  rxdesc_tab[ENET_RXBUF_NUM], txdesc_tab[ENET_TXBUF_NUM];
@@ -81,12 +83,12 @@ static void low_level_init(struct netif *netif)
     netif->hwaddr_len = ETHARP_HWADDR_LEN;
 
     /* set MAC hardware address */
-    netif->hwaddr[0] =  MAC_ADDR0;
-    netif->hwaddr[1] =  MAC_ADDR1;
-    netif->hwaddr[2] =  MAC_ADDR2;
-    netif->hwaddr[3] =  MAC_ADDR3;
-    netif->hwaddr[4] =  MAC_ADDR4;
-    netif->hwaddr[5] =  MAC_ADDR5;
+    netif->hwaddr[0] =  MAC_ADDR[0];
+    netif->hwaddr[1] =  MAC_ADDR[1];
+    netif->hwaddr[2] =  MAC_ADDR[2];
+    netif->hwaddr[3] =  MAC_ADDR[3];
+    netif->hwaddr[4] =  MAC_ADDR[4];
+    netif->hwaddr[5] =  MAC_ADDR[5];
     
     /* initialize MAC address in ethernet MAC */ 
     enet_mac_address_set(ENET_MAC_ADDRESS0, netif->hwaddr);
@@ -264,3 +266,4 @@ err_t ethernetif_init(struct netif *netif)
 
     return ERR_OK;
 }
+

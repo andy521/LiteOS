@@ -32,33 +32,30 @@
 #ifndef LWIP_ARCH_SYS_ARCH_H
 #define LWIP_ARCH_SYS_ARCH_H
 
+#include "los_typedef.h"
+#include "los_base.h"
+#include "los_task.h"
+#include "los_queue.h"
+#include "los_mux.h"
+#include "los_sem.h"
+
+typedef UINTPTR sys_prot_t;
+
 typedef UINT32 sys_sem_t;
-#define sys_sem_valid(sema) (((sema) != NULL) && ((sema)->sem != NULL)  && ((sema)->sem != (void*)-1))
-#define sys_sem_set_invalid(sema) ((sema)->sem = NULL)
+#define sys_sem_valid(sem) ((sem) != NULL)
+#define sys_sem_set_invalid(sem) (*(sem) = NULL)
 
-/* HANDLE is used for sys_mutex_t but we won't include windows.h */
-struct _sys_mut {
-  void *mut;
-};
-typedef struct _sys_mut sys_mutex_t;
-#define sys_mutex_valid(mutex) (((mutex) != NULL) && ((mutex)->mut != NULL)  && ((mutex)->mut != (void*)-1))
-#define sys_mutex_set_invalid(mutex) ((mutex)->mut = NULL)
+typedef UINT32 sys_mutex_t;
+#define sys_mutex_valid(mutex) ((mutex) != NULL)
+#define sys_mutex_set_invalid(mutex) (*(mutex) = NULL)
 
-#ifndef MAX_QUEUE_ENTRIES
-#define MAX_QUEUE_ENTRIES 100
-#endif
-struct lwip_mbox {
-  void* sem;
-  void* q_mem[MAX_QUEUE_ENTRIES];
-  u32_t head, tail;
-};
-typedef struct lwip_mbox sys_mbox_t;
+typedef UINT32 sys_mbox_t;
 #define SYS_MBOX_NULL NULL
-#define sys_mbox_valid(mbox) ((mbox != NULL) && ((mbox)->sem != NULL)  && ((mbox)->sem != (void*)-1))
-#define sys_mbox_set_invalid(mbox) ((mbox)->sem = NULL)
+#define sys_mbox_valid(q) ((q) != NULL)
+#define sys_mbox_set_invalid(q) (*(q) = NULL)
 
 /* DWORD (thread id) is used for sys_thread_t but we won't include windows.h */
-typedef u32_t sys_thread_t;
+typedef UINT32 sys_thread_t;
 
 sys_sem_t* sys_arch_netconn_sem_get(void);
 void sys_arch_netconn_sem_alloc(void);

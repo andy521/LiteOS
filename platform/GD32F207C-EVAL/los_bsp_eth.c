@@ -17,6 +17,7 @@ static void eth_nvic_config(void);
  *****************************************************************************/
 void LOS_EvbEthInit(void)
 {
+    __disable_irq();
 #ifdef USE_ENET_INTERRUPT
     eth_nvic_config();
 #endif /* USE_ENET_INTERRUPT */
@@ -41,26 +42,9 @@ void LOS_EvbEthInit(void)
     systick_clksource_set(SYSTICK_CLKSOURCE_HCLK);
 
     /* an interrupt every 10ms */
-    ahb_frequency = rcu_clock_freq_get(CK_AHB);
+    //ahb_frequency = rcu_clock_freq_get(CK_AHB);
 
     return;
-}
-
-/*****************************************************************************
- Function    : LOS_EvbGetKeyVal
- Description : Get GIOP Key value
- Input       : None
- Output      : None
- Return      : None
- *****************************************************************************/
-unsigned int LOS_EvbGetKeyVal(int KeyNum)
-{
-    unsigned int KeyVal = LOS_GPIO_ERR;
-
-    if(gpio_input_bit_get(GPIOB, GPIO_PIN_14) == SET)
-        KeyVal = LOS_KEY_PRESS;
-
-    return KeyVal;
 }
 
 static void eth_gpio_config(void)
@@ -128,4 +112,21 @@ static void eth_nvic_config(void)
     nvic_vector_table_set(NVIC_VECTTAB_FLASH, 0x0);
     nvic_priority_group_set(NVIC_PRIGROUP_PRE2_SUB2);
     nvic_irq_enable(ENET_IRQn, 0, 0);
+}
+
+/*!
+    \brief      this function handles ethernet interrupt request
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+void ETH_IRQHandler(void)
+{
+    /* clear the enet DMA Rx interrupt pending bits */
+    enet_interrupt_flag_clear(ENET_DMA_INT_FLAG_RS_CLR);
+    enet_interrupt_flag_clear(ENET_DMA_INT_FLAG_NI_CLR);
+    /* handles all the received frames */
+    while(enet_rxframe_size_get()){   
+        lwip_pkt_handle();
+    }    
 }

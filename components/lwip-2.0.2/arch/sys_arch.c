@@ -39,48 +39,21 @@
 #include <lwip/stats.h>
 #include <lwip/debug.h>
 #include <lwip/sys.h>
-
-#if (NO_SYS == 0)
+#include "sys_arch.h"
 
 /* These functions are used from NO_SYS also, for precise timer triggering */
-LARGE_INTEGER freq, sys_start_time;
-#define SYS_INITIALIZED() (freq.QuadPart != 0)
-
-u32_t sys_jiffies(void)
-{
-    return (u32_t)sys_get_ms_longlong();
-}
-
-u32_t sys_now(void)
-{
-    return (u32_t)LOS_TickCountGet();
-}
-
-sys_prot_t sys_arch_protect(void)
-{
-    return LOS_IntLock();
-}
-
-void sys_arch_unprotect(sys_prot_t pval)
-{
-    LOS_IntRestore(pval);
-}
 
 void sys_init(void)
 {
 
 }
 
+u32_t sys_now(void)
+{
+	return (u32_t)LOS_TickCountGet();
+}
+
 #if !NO_SYS
-
-struct threadlist {
-    lwip_thread_fn function;
-    void *arg;
-    DWORD id;
-    struct threadlist *next;
-};
-
-struct threadlist *lwip_win32_threads = NULL;
 
 /*---------------------------------------------------------------------------*
  * Routine:  sys_sem_new
@@ -98,12 +71,11 @@ struct threadlist *lwip_win32_threads = NULL;
 err_t sys_sem_new(sys_sem_t *sem, u8_t count)
 {
     err_t ret = ERR_MEM;
-    UINT32 uwRet;
 
     LWIP_ASSERT("sem != NULL", sem != NULL);
   
     /* create mutex */
-    if(LOS_MuxCreate(sem) != LOS_OK);
+    if(LOS_MuxCreate(sem) != LOS_OK)
     {
         ret = ERR_MEM;
         //SYS_STATS_INC(sem.err);
@@ -217,7 +189,7 @@ u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout)
 
 err_t sys_mutex_new(sys_mutex_t *mutex)
 {
-    return sys_sem_new((sys_sem_t *)mutex);
+    return sys_sem_new((sys_sem_t *)mutex, 1);
 }
 
 void sys_mutex_free(sys_mutex_t *mutex)
@@ -253,7 +225,7 @@ err_t sys_mbox_new( sys_mbox_t *q, int size )
     LWIP_ASSERT("q != NULL", q != NULL);
     LWIP_ASSERT("size != NULL", size != NULL);
 
-    if(LOS_QueueCreate("", size, q, sizeof(void *)) == LOS_OK)
+    if(LOS_QueueCreate("", size, q, 0, sizeof(void *)) == LOS_OK)
     {
         ret = ERR_OK;
         //SYS_STATS_INC_USED(mbox);
@@ -356,49 +328,6 @@ err_t sys_mbox_trypost(sys_mbox_t *q, void *data)
  *---------------------------------------------------------------------------*/
 u32_t sys_arch_mbox_fetch( sys_mbox_t *q, void **data, u32_t timeout )
 {
-	void *pvDummy;
-	portTickType xStartTime, xEndTime, xElapsed;
-	unsigned long ulReturn;
-
-	xStartTime = xTaskGetTickCount();
-
-	if( NULL == ppvBuffer )
-	{
-		ppvBuffer = &pvDummy;
-	}
-
-	if( ulTimeOut != 0UL )
-	{
-		if( pdTRUE == xQueueReceive( *pxMailBox, &( *ppvBuffer ), ulTimeOut/ portTICK_RATE_MS ) )
-		{
-			xEndTime = xTaskGetTickCount();
-			xElapsed = ( xEndTime - xStartTime ) * portTICK_RATE_MS;
-
-			ulReturn = xElapsed;
-		}
-		else
-		{
-			/* Timed out. */
-			*ppvBuffer = NULL;
-			ulReturn = SYS_ARCH_TIMEOUT;
-		}
-	}
-	else
-	{
-		while( pdTRUE != xQueueReceive( *pxMailBox, &( *ppvBuffer ), portMAX_DELAY ) );
-		xEndTime = xTaskGetTickCount();
-		xElapsed = ( xEndTime - xStartTime ) * portTICK_RATE_MS;
-
-		if( xElapsed == 0UL )
-		{
-			xElapsed = 1UL;
-		}
-
-		ulReturn = xElapsed;
-	}
-
-	return ulReturn;
-
     u32_t ret;
     UINT64 time_start, time_end, time_diff;
 
@@ -408,7 +337,7 @@ u32_t sys_arch_mbox_fetch( sys_mbox_t *q, void **data, u32_t timeout )
     
     if(timeout != 0UL)
     {
-        if(LOS_QueueRead(*q, timeout) == LOS_OK)
+        if(LOS_QueueRead(*q, data, sizeof(void *), timeout) == LOS_OK)
         {
             time_end = LOS_TickCountGet();
             time_diff = time_end - time_start;
@@ -421,7 +350,7 @@ u32_t sys_arch_mbox_fetch( sys_mbox_t *q, void **data, u32_t timeout )
     }
     else
     {
-        LOS_MuxPend(*sem, LOS_WAIT_FOREVER);
+        LOS_QueueRead(*q, data, sizeof(void *), LOS_WAIT_FOREVER);
         time_end = LOS_TickCountGet();
         time_diff = time_end - time_start;
         ret = time_diff;
@@ -444,307 +373,102 @@ u32_t sys_arch_mbox_fetch( sys_mbox_t *q, void **data, u32_t timeout )
  *      u32_t                   -- SYS_MBOX_EMPTY if no messages.  Otherwise,
  *                                  return ERR_OK.
  *---------------------------------------------------------------------------*/
-u32_t sys_arch_mbox_tryfetch( sys_mbox_t *pxMailBox, void **ppvBuffer )
+u32_t sys_arch_mbox_tryfetch( sys_mbox_t *q, void **data )
 {
-	void *pvDummy;
-	unsigned long ulReturn;
+    u32_t ret;
 
-	if( ppvBuffer== NULL )
-	{
-		ppvBuffer = &pvDummy;
-	}
+    LWIP_ASSERT("q != NULL", q != NULL);
+    LWIP_ASSERT("data != NULL", data != NULL);
+    LWIP_ASSERT("*data != NULL", *data != NULL);
 
-	if( pdTRUE == xQueueReceive( *pxMailBox, &( *ppvBuffer ), 0UL ) )
-	{
-		ulReturn = ERR_OK;
-	}
-	else
-	{
-		ulReturn = SYS_MBOX_EMPTY;
-	}
+    if(LOS_QueueRead(*q, data, sizeof(void *), 0UL) == LOS_OK)
+    {
+        ret = ERR_OK;
+    }
+    else
+    {
+        ret = SYS_MBOX_EMPTY;
+    }
 
-	return ulReturn;
+    return ret;
 }
 
-#ifdef _MSC_VER
-const DWORD MS_VC_EXCEPTION=0x406D1388;
-#pragma pack(push,8)
-typedef struct tagTHREADNAME_INFO
-{
-  DWORD dwType; /* Must be 0x1000. */
-  LPCSTR szName; /* Pointer to name (in user addr space). */
-  DWORD dwThreadID; /* Thread ID (-1=caller thread). */
-  DWORD dwFlags; /* Reserved for future use, must be zero. */
-} THREADNAME_INFO;
-#pragma pack(pop)
-static void SetThreadName(DWORD dwThreadID, const char* threadName)
-{
-  THREADNAME_INFO info;
-  info.dwType = 0x1000;
-  info.szName = threadName;
-  info.dwThreadID = dwThreadID;
-  info.dwFlags = 0;
-
-  __try
-  {
-    RaiseException(MS_VC_EXCEPTION, 0, sizeof(info)/sizeof(ULONG_PTR), (ULONG_PTR*)&info);
-  }
-  __except(EXCEPTION_EXECUTE_HANDLER)
-  {
-  }
-}
-#else /* _MSC_VER */
-static void SetThreadName(DWORD dwThreadID, const char* threadName)
-{
-  LWIP_UNUSED_ARG(dwThreadID);
-  LWIP_UNUSED_ARG(threadName);
-}
-#endif /* _MSC_VER */
-
-static void sys_thread_function(void* arg)
-{
-  struct threadlist* t = (struct threadlist*)arg;
-#if LWIP_NETCONN_SEM_PER_THREAD
-  sys_arch_netconn_sem_alloc();
-#endif
-  t->function(t->arg);
-#if LWIP_NETCONN_SEM_PER_THREAD
-  sys_arch_netconn_sem_free();
-#endif
-}
-
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_thread_new
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Starts a new thread with priority "prio" that will begin its
+ *      execution in the function "thread()". The "arg" argument will be
+ *      passed as an argument to the thread() function. The id of the new
+ *      thread is returned. Both the id and the priority are system
+ *      dependent.
+ * Inputs:
+ *      char *name              -- Name of thread
+ *      lwip_thread_fn function -- Pointer to function to run.
+ *      void *arg               -- Argument passed into function
+ *      int stacksize           -- Required stack amount in bytes
+ *      int prio                -- Thread priority
+ * Outputs:
+ *      sys_thread_t            -- Pointer to per-thread timeouts.
+ *---------------------------------------------------------------------------*/
 sys_thread_t sys_thread_new(const char *name, lwip_thread_fn function, void *arg, int stacksize, int prio)
 {
-  struct threadlist *new_thread;
-  HANDLE h;
-  SYS_ARCH_DECL_PROTECT(lev);
+    UINT32 task_id = 0;
+    TSK_INIT_PARAM_S stInitParam;
 
-  LWIP_UNUSED_ARG(name);
-  LWIP_UNUSED_ARG(stacksize);
-  LWIP_UNUSED_ARG(prio);
+    stInitParam.pfnTaskEntry    = (TSK_ENTRY_FUNC)function;
+    stInitParam.usTaskPrio      = prio;
+    stInitParam.pcName          = (CHAR *)name;
+    stInitParam.auwArgs[0]      = (UINT32)arg;
+    stInitParam.uwStackSize     = stacksize;
+    stInitParam.uwResved        = LOS_TASK_STATUS_DETACHED;
 
-  new_thread = (struct threadlist*)malloc(sizeof(struct threadlist));
-  LWIP_ASSERT("new_thread != NULL", new_thread != NULL);
-  if(new_thread != NULL) {
-    new_thread->function = function;
-    new_thread->arg = arg;
-    SYS_ARCH_PROTECT(lev);
-    new_thread->next = lwip_win32_threads;
-    lwip_win32_threads = new_thread;
-
-    h = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)sys_thread_function, new_thread, 0, &(new_thread->id));
-    LWIP_ASSERT("h != 0", h != 0);
-    LWIP_ASSERT("h != -1", h != INVALID_HANDLE_VALUE);
-    LWIP_UNUSED_ARG(h);
-    SetThreadName(new_thread->id, name);
-
-    SYS_ARCH_UNPROTECT(lev);
-    return new_thread->id;
-  }
-  return 0;
-}
-
-err_t sys_mbox_new(sys_mbox_t *mbox, int size)
-{
-  LWIP_ASSERT("mbox != NULL", mbox != NULL);
-  LWIP_UNUSED_ARG(size);
-
-  mbox->sem = CreateSemaphore(0, 0, MAX_QUEUE_ENTRIES, 0);
-  LWIP_ASSERT("Error creating semaphore", mbox->sem != NULL);
-  if(mbox->sem == NULL) {
-    SYS_STATS_INC(mbox.err);
-    return ERR_MEM;
-  }
-  memset(&mbox->q_mem, 0, sizeof(u32_t)*MAX_QUEUE_ENTRIES);
-  mbox->head = 0;
-  mbox->tail = 0;
-  SYS_STATS_INC_USED(mbox);
-#if LWIP_STATS && SYS_STATS
-  LWIP_ASSERT("sys_mbox_new() counter overflow", lwip_stats.sys.mbox.used != 0 );
-#endif /* LWIP_STATS && SYS_STATS */
-  return ERR_OK;
-}
-
-void sys_mbox_free(sys_mbox_t *mbox)
-{
-  /* parameter check */
-  LWIP_ASSERT("mbox != NULL", mbox != NULL);
-  LWIP_ASSERT("mbox->sem != NULL", mbox->sem != NULL);
-  LWIP_ASSERT("mbox->sem != INVALID_HANDLE_VALUE", mbox->sem != INVALID_HANDLE_VALUE);
-
-  CloseHandle(mbox->sem);
-
-   SYS_STATS_DEC(mbox.used);
-#if LWIP_STATS && SYS_STATS
-   LWIP_ASSERT( "sys_mbox_free() ", lwip_stats.sys.mbox.used!= (u16_t)-1 );
-#endif /* LWIP_STATS && SYS_STATS */
-  mbox->sem = NULL;
-}
-
-void sys_mbox_post(sys_mbox_t *q, void *msg)
-{
-  DWORD ret;
-  SYS_ARCH_DECL_PROTECT(lev);
-
-  /* parameter check */
-  LWIP_ASSERT("q != SYS_MBOX_NULL", q != SYS_MBOX_NULL);
-  LWIP_ASSERT("q->sem != NULL", q->sem != NULL);
-  LWIP_ASSERT("q->sem != INVALID_HANDLE_VALUE", q->sem != INVALID_HANDLE_VALUE);
-
-  SYS_ARCH_PROTECT(lev);
-  q->q_mem[q->head] = msg;
-  (q->head)++;
-  if (q->head >= MAX_QUEUE_ENTRIES) {
-    q->head = 0;
-  }
-  LWIP_ASSERT("mbox is full!", q->head != q->tail);
-  ret = ReleaseSemaphore(q->sem, 1, 0);
-  LWIP_ASSERT("Error releasing sem", ret != 0);
-  LWIP_UNUSED_ARG(ret);
-
-  SYS_ARCH_UNPROTECT(lev);
-}
-
-err_t sys_mbox_trypost(sys_mbox_t *q, void *msg)
-{
-  u32_t new_head;
-  DWORD ret;
-  SYS_ARCH_DECL_PROTECT(lev);
-
-  /* parameter check */
-  LWIP_ASSERT("q != SYS_MBOX_NULL", q != SYS_MBOX_NULL);
-  LWIP_ASSERT("q->sem != NULL", q->sem != NULL);
-  LWIP_ASSERT("q->sem != INVALID_HANDLE_VALUE", q->sem != INVALID_HANDLE_VALUE);
-
-  SYS_ARCH_PROTECT(lev);
-
-  new_head = q->head + 1;
-  if (new_head >= MAX_QUEUE_ENTRIES) {
-    new_head = 0;
-  }
-  if (new_head == q->tail) {
-    SYS_ARCH_UNPROTECT(lev);
-    return ERR_MEM;
-  }
-
-  q->q_mem[q->head] = msg;
-  q->head = new_head;
-  LWIP_ASSERT("mbox is full!", q->head != q->tail);
-  ret = ReleaseSemaphore(q->sem, 1, 0);
-  LWIP_ASSERT("Error releasing sem", ret != 0);
-  LWIP_UNUSED_ARG(ret);
-
-  SYS_ARCH_UNPROTECT(lev);
-  return ERR_OK;
-}
-
-u32_t sys_arch_mbox_fetch(sys_mbox_t *q, void **msg, u32_t timeout)
-{
-  DWORD ret;
-  LONGLONG starttime, endtime;
-  SYS_ARCH_DECL_PROTECT(lev);
-
-  /* parameter check */
-  LWIP_ASSERT("q != SYS_MBOX_NULL", q != SYS_MBOX_NULL);
-  LWIP_ASSERT("q->sem != NULL", q->sem != NULL);
-  LWIP_ASSERT("q->sem != INVALID_HANDLE_VALUE", q->sem != INVALID_HANDLE_VALUE);
-
-  if (timeout == 0) {
-    timeout = INFINITE;
-  }
-  starttime = sys_get_ms_longlong();
-  if ((ret = WaitForSingleObject(q->sem, timeout)) == WAIT_OBJECT_0) {
-    SYS_ARCH_PROTECT(lev);
-    if(msg != NULL) {
-      *msg  = q->q_mem[q->tail];
+    if (LOS_TaskCreate(&task_id, &stInitParam) != LOS_OK)
+    {
+        return 0;
     }
 
-    (q->tail)++;
-    if (q->tail >= MAX_QUEUE_ENTRIES) {
-      q->tail = 0;
-    }
-    SYS_ARCH_UNPROTECT(lev);
-    endtime = sys_get_ms_longlong();
-    return (u32_t)(endtime - starttime);
-  }
-  else
-  {
-    LWIP_ASSERT("Error waiting for sem", ret == WAIT_TIMEOUT);
-    if(msg != NULL) {
-      *msg  = NULL;
-    }
-
-    return SYS_ARCH_TIMEOUT;
-  }
+    return task_id;
 }
 
-u32_t sys_arch_mbox_tryfetch(sys_mbox_t *q, void **msg)
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_arch_protect
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      This optional function does a "fast" critical region protection and
+ *      returns the previous protection level. This function is only called
+ *      during very short critical regions. An embedded system which supports
+ *      ISR-based drivers might want to implement this function by disabling
+ *      interrupts. Task-based systems might want to implement this by using
+ *      a mutex or disabling tasking. This function should support recursive
+ *      calls from the same task or interrupt. In other words,
+ *      sys_arch_protect() could be called while already protected. In
+ *      that case the return value indicates that it is already protected.
+ *
+ *      sys_arch_protect() is only required if your port is supporting an
+ *      operating system.
+ * Outputs:
+ *      sys_prot_t              -- Previous protection level (not used here)
+ *---------------------------------------------------------------------------*/
+sys_prot_t sys_arch_protect( void )
 {
-  DWORD ret;
-  SYS_ARCH_DECL_PROTECT(lev);
-
-  /* parameter check */
-  LWIP_ASSERT("q != SYS_MBOX_NULL", q != SYS_MBOX_NULL);
-  LWIP_ASSERT("q->sem != NULL", q->sem != NULL);
-  LWIP_ASSERT("q->sem != INVALID_HANDLE_VALUE", q->sem != INVALID_HANDLE_VALUE);
-
-  if ((ret = WaitForSingleObject(q->sem, 0)) == WAIT_OBJECT_0) {
-    SYS_ARCH_PROTECT(lev);
-    if(msg != NULL) {
-      *msg  = q->q_mem[q->tail];
-    }
-
-    (q->tail)++;
-    if (q->tail >= MAX_QUEUE_ENTRIES) {
-      q->tail = 0;
-    }
-    SYS_ARCH_UNPROTECT(lev);
-    return 0;
-  }
-  else
-  {
-    LWIP_ASSERT("Error waiting for sem", ret == WAIT_TIMEOUT);
-    if(msg != NULL) {
-      *msg  = NULL;
-    }
-
-    return SYS_ARCH_TIMEOUT;
-  }
+    return (sys_prot_t)LOS_IntLock();
 }
 
-#if LWIP_NETCONN_SEM_PER_THREAD
-sys_sem_t* sys_arch_netconn_sem_get(void)
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_arch_unprotect
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      This optional function does a "fast" set of critical region
+ *      protection to the value specified by pval. See the documentation for
+ *      sys_arch_protect() for more information. This function is only
+ *      required if your port is supporting an operating system.
+ * Inputs:
+ *      sys_prot_t              -- Previous protection level (not used here)
+ *---------------------------------------------------------------------------*/
+void sys_arch_unprotect(sys_prot_t value)
 {
-  LPVOID tls_data = TlsGetValue(netconn_sem_tls_index);
-  return (sys_sem_t*)tls_data;
+    LOS_IntRestore(value);
 }
-
-void sys_arch_netconn_sem_alloc(void)
-{
-  sys_sem_t *sem;
-  err_t err;
-  BOOL done;
-
-  sem = (sys_sem_t*)malloc(sizeof(sys_sem_t));
-  LWIP_ASSERT("failed to allocate memory for TLS semaphore", sem != NULL);
-  err = sys_sem_new(sem, 0);
-  LWIP_ASSERT("failed to initialise TLS semaphore", err == ERR_OK);
-  done = TlsSetValue(netconn_sem_tls_index, sem);
-  LWIP_UNUSED_ARG(done);
-  LWIP_ASSERT("failed to initialise TLS semaphore storage", done == TRUE);
-}
-
-void sys_arch_netconn_sem_free(void)
-{
-  LPVOID tls_data = TlsGetValue(netconn_sem_tls_index);
-  if (tls_data != NULL) {
-    BOOL done;
-    free(tls_data);
-    done = TlsSetValue(netconn_sem_tls_index, NULL);
-    LWIP_UNUSED_ARG(done);
-    LWIP_ASSERT("failed to de-init TLS semaphore storage", done == TRUE);
-  }
-}
-#endif /* LWIP_NETCONN_SEM_PER_THREAD */
 
 #endif /* !NO_SYS */
