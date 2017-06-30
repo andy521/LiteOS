@@ -13,10 +13,6 @@
 #include "ethernetif.h"
 
 struct netif netif;
-uint32_t tcp_timer = 0;
-uint32_t arp_timer = 0;
-ip_addr_t ip_address = {0};
-
 int errno = 0;
 
 void LOS_EvbLwipInit(void)
@@ -70,12 +66,13 @@ void LOS_EvbLwipInit(void)
     netif_set_up(&netif);
 }
 
-/*!
-    \brief      called when a frame is received
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
+/*****************************************************************************
+ Function    : lwip_pkt_handle
+ Description : handle lwip package, send eth data to lwip thread
+ Input       : None
+ Output      : None
+ Return      : None
+ *****************************************************************************/
 void lwip_pkt_handle(void)
 {
     /* read a received packet from the Ethernet buffers and send it to the lwIP for handling */

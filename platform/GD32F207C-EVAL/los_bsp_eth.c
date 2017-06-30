@@ -10,7 +10,7 @@ static void eth_nvic_config(void);
 
 /*****************************************************************************
  Function    : LOS_EvbEthInit
- Description : key init
+ Description : mac init
  Input       : None
  Output      : None
  Return      : None
@@ -41,12 +41,16 @@ void LOS_EvbEthInit(void)
     /* configure systick clock source as HCLK */
     systick_clksource_set(SYSTICK_CLKSOURCE_HCLK);
 
-    /* an interrupt every 10ms */
-    //ahb_frequency = rcu_clock_freq_get(CK_AHB);
-
     return;
 }
 
+/*****************************************************************************
+ Function    : eth_gpio_config
+ Description : eth gpio configuration
+ Input       : None
+ Output      : None
+ Return      : None
+ *****************************************************************************/
 static void eth_gpio_config(void)
 {
     rcu_periph_clock_enable(RCU_GPIOA);
@@ -87,6 +91,13 @@ static void eth_gpio_config(void)
     gpio_init(GPIOB, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_13);    
 }
 
+/*****************************************************************************
+ Function    : eth_dma_config
+ Description : eth dma configuration
+ Input       : None
+ Output      : None
+ Return      : None
+ *****************************************************************************/
 static void eth_dma_config(void)
 {
     ErrStatus reval_state = ERROR;
@@ -107,6 +118,13 @@ static void eth_dma_config(void)
     enet_init_status = enet_init(ENET_AUTO_NEGOTIATION, ENET_NO_AUTOCHECKSUM, ENET_BROADCAST_FRAMES_PASS);
 }
 
+/*****************************************************************************
+ Function    : eth_nvic_config
+ Description : eth NVIC configuration
+ Input       : None
+ Output      : None
+ Return      : None
+ *****************************************************************************/
 static void eth_nvic_config(void)
 {
     nvic_vector_table_set(NVIC_VECTTAB_FLASH, 0x0);
@@ -114,12 +132,13 @@ static void eth_nvic_config(void)
     nvic_irq_enable(ENET_IRQn, 0, 0);
 }
 
-/*!
-    \brief      this function handles ethernet interrupt request
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
+/*****************************************************************************
+ Function    : ETH_IRQHandler
+ Description : eth interrupt handler
+ Input       : None
+ Output      : None
+ Return      : None
+ *****************************************************************************/
 void ETH_IRQHandler(void)
 {
     /* clear the enet DMA Rx interrupt pending bits */

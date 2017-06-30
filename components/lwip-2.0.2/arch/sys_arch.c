@@ -26,13 +26,12 @@
  *
  * This file is part of the lwIP TCP/IP stack.
  * 
- * Author: Adam Dunkels <adam@sics.se>
- *         Simon Goldschmidt
+ * Author: xiaxiaowen https://github.com/xiaowenxia
  *
  */
 
 #include <stdlib.h>
-#include <stdio.h> /* sprintf() for task names */
+#include <stdio.h>
 
 #include <lwip/opt.h>
 #include <lwip/arch.h>
@@ -41,13 +40,30 @@
 #include <lwip/sys.h>
 #include "sys_arch.h"
 
-/* These functions are used from NO_SYS also, for precise timer triggering */
+/* These functions are used for LiteOS only */
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_init
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      doing lwip sys init,for LiteOS,nothing need to init
+ * Inputs:
+ * Outputs:
+ *---------------------------------------------------------------------------*/
 void sys_init(void)
 {
-
+    /* do nothing */
 }
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_now
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      return the systick counter
+ * Inputs:
+ * Outputs:
+ *      u32_t                   -- systick count
+ *---------------------------------------------------------------------------*/
 u32_t sys_now(void)
 {
 	return (u32_t)LOS_TickCountGet();
@@ -63,17 +79,16 @@ u32_t sys_now(void)
  *      the initial state of the semaphore.
  *      NOTE: Currently this routine only creates counts of 1 or 0
  * Inputs:
- *      sys_sem_t *sem            -- Handle of semaphore
+ *      sys_sem_t *sem          -- Handle of semaphore
  *      u8_t count              -- Initial count of semaphore (1 or 0)
  * Outputs:
- *      sys_sem_t               -- Created semaphore or 0 if could not create.
+ *      err_t                   -- ERR_MEM: create semaphore failed
+                                   ERR_OK:  create semaphore success
  *---------------------------------------------------------------------------*/
 err_t sys_sem_new(sys_sem_t *sem, u8_t count)
 {
     err_t ret = ERR_MEM;
 
-    LWIP_ASSERT("sem != NULL", sem != NULL);
-  
     /* create mutex */
     if(LOS_MuxCreate(sem) != LOS_OK)
     {
@@ -130,6 +145,9 @@ void sys_sem_free(sys_sem_t *sem)
  *---------------------------------------------------------------------------*/
 void sys_sem_signal(sys_sem_t *sem)
 {
+    /* parameter check */
+    LWIP_ASSERT("sem != NULL", sem != NULL);
+
     LOS_MuxPost(*sem);
 }
 
@@ -161,6 +179,9 @@ u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout)
     u32_t ret;
     UINT64 time_start, time_end, time_diff;
 
+    /* parameter check */
+    LWIP_ASSERT("sem != NULL", sem != NULL);
+
     time_start = LOS_TickCountGet();
     
     if( timeout != 0UL )
@@ -187,21 +208,60 @@ u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout)
     return ret;
 }
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mutex_new
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Creates and returns a new mutex.
+ *      just call sys_mutex_new()
+ * Inputs:
+ *      sys_mutex_t *mutex          -- Handle of mutex=
+ * Outputs:
+ *      err_t                   -- ERR_MEM: create mutex failed
+                                   ERR_OK:  create mutex success
+ *---------------------------------------------------------------------------*/
 err_t sys_mutex_new(sys_mutex_t *mutex)
 {
     return sys_sem_new((sys_sem_t *)mutex, 1);
 }
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mutex_free
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Deallocates a mutex
+ *      just call sys_sem_free()
+ * Inputs:
+ *      sys_mutex_t *mutex           -- mutex to free
+ *---------------------------------------------------------------------------*/
 void sys_mutex_free(sys_mutex_t *mutex)
 {
     sys_sem_free((sys_sem_t *)mutex);
 }
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mutex_lock
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      wait a mutex
+ *      just call sys_arch_sem_wait()
+ * Inputs:
+ *      sys_mutex_t mutex           -- mutex to lock
+ *---------------------------------------------------------------------------*/
 void sys_mutex_lock(sys_mutex_t *mutex)
 {
     sys_arch_sem_wait((sys_sem_t *)mutex, 0);
 }
 
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mutex_unlock
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      unlock (releases) a mutex
+ *      just call sys_sem_signal()
+ * Inputs:
+ *      sys_mutex_t mutex           -- mutex to unlock
+ *---------------------------------------------------------------------------*/
 void sys_mutex_unlock(sys_mutex_t *mutex)
 {
     sys_sem_signal((sys_sem_t *)mutex);
@@ -213,9 +273,11 @@ void sys_mutex_unlock(sys_mutex_t *mutex)
  * Description:
  *      Creates a new mailbox
  * Inputs:
+        sys_mbox_t q            -- mailbox to create
  *      int size                -- Size of elements in the mailbox
  * Outputs:
- *      sys_mbox_t              -- Handle to new mailbox
+ *      err_t                   -- ERR_MEM: create mailbox failed
+                                   ERR_OK:  create mailbox success
  *---------------------------------------------------------------------------*/
 err_t sys_mbox_new( sys_mbox_t *q, int size )
 {
@@ -248,6 +310,7 @@ err_t sys_mbox_new( sys_mbox_t *q, int size )
  *---------------------------------------------------------------------------*/
 void sys_mbox_free( sys_mbox_t *q )
 {
+    /* parameter check */
     LWIP_ASSERT("q != NULL", q != NULL);
     
     while (LOS_QueueDelete(*q) != LOS_OK)
@@ -267,6 +330,7 @@ void sys_mbox_free( sys_mbox_t *q )
  *---------------------------------------------------------------------------*/
 void sys_mbox_post(sys_mbox_t *q, void *data)
 {
+    /* parameter check */
     LWIP_ASSERT("q != NULL", q != NULL);
 
     LOS_QueueWrite(*q, data, sizeof(void *), LOS_WAIT_FOREVER);
@@ -289,6 +353,7 @@ err_t sys_mbox_trypost(sys_mbox_t *q, void *data)
 {
     err_t ret = ERR_OK;
 
+    /* parameter check */
     LWIP_ASSERT("q != NULL", q != NULL);
 
     if(LOS_QueueWrite(*q, data, sizeof(void *), LOS_NO_WAIT) != LOS_OK)
@@ -331,6 +396,7 @@ u32_t sys_arch_mbox_fetch( sys_mbox_t *q, void **data, u32_t timeout )
     u32_t ret;
     UINT64 time_start, time_end, time_diff;
 
+    /* parameter check */
     LWIP_ASSERT("q != NULL", q != NULL);
 
     time_start = LOS_TickCountGet();
@@ -377,9 +443,9 @@ u32_t sys_arch_mbox_tryfetch( sys_mbox_t *q, void **data )
 {
     u32_t ret;
 
+    /* parameter check */
     LWIP_ASSERT("q != NULL", q != NULL);
     LWIP_ASSERT("data != NULL", data != NULL);
-    LWIP_ASSERT("*data != NULL", *data != NULL);
 
     if(LOS_QueueRead(*q, data, sizeof(void *), 0UL) == LOS_OK)
     {
