@@ -57,6 +57,7 @@ OS_TASK_STATUS_RUNNING      EQU     0x0010
     THUMB
     REQUIRE8
 
+; LiteOS 通过该函数开启调度
 LOS_StartToRun
     LDR     R4, =OS_NVIC_SYSPRI2
     LDR     R5, =OS_NVIC_PENDSV_PRI

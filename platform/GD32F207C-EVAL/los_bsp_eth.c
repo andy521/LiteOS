@@ -1,7 +1,7 @@
 #include "los_bsp_eth.h"
+#include "los_bsp_lwip.h"
 #include "gd32f20x_rcu.h"
 #include "gd32f20x_gpio.h"
-
 static volatile uint32_t enet_init_status = 0;
 
 static void eth_gpio_config(void);
