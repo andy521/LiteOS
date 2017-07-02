@@ -6,5 +6,7 @@
 ### 开发板类型
 * GD32F207C-EVAL
 
+## LiteOS 系统初始化流程
+![](./doc/LiteOS_System_initialization.png)
 ## 开源协议
 * 遵循MIT开源许可协议
