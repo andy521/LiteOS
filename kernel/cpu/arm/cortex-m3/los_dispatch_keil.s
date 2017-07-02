@@ -60,16 +60,18 @@ OS_TASK_STATUS_RUNNING      EQU     0x0010
 ; LiteOS 通过该函数开启调度
 LOS_StartToRun
     ; 设置systick、pendSV中断优先级: *((volatile uint32_t *)0xE000ED20) = 0xF0F00000;
+    ; 设置systick、pendSV中断优先级为最低，是为了最大的保证其他中断的实时性
     LDR     R4, =OS_NVIC_SYSPRI2
     LDR     R5, =OS_NVIC_PENDSV_PRI
     STR     R5, [R4]
 
-    ; g_bTaskScheduled = 1;
+    ; 设置全局变量为1: g_bTaskScheduled = 1;
     LDR     R0, =g_bTaskScheduled
     MOV     R1, #1
     STR     R1, [R0]
 
     ; CONTROL 特殊寄存器置 2，表示使用PSP（线程栈）
+    ; Cortex-M3 提供2个SP寄存器用于存放栈指针:MSP,PSP.(Main SP, Process SP), 可以把中断程序和用户程序的栈分开了
     MOV     R0, #2
     MSR     CONTROL, R0
 
