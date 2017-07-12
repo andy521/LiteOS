@@ -64,6 +64,11 @@ void *send_Entry(UINT32 uwParam1,
     UINT32 i = 0,uwRet = 0;
     UINT32 uwlen = sizeof(abuf);
 
+    (void)uwParam1;
+    (void)uwParam2;
+    (void)uwParam3;
+    (void)uwParam4;
+    
     while (i < API_MSG_NUM)
     {
         abuf[uwlen -2] = '0' + i;
@@ -91,6 +96,11 @@ void *recv_Entry(UINT32 uwParam1,
     UINT32 uwRet = 0;
     UINT32 uwMsgCount = 0;
 
+    (void)uwParam1;
+    (void)uwParam2;
+    (void)uwParam3;
+    (void)uwParam4;
+    
     while (1)
     {
 

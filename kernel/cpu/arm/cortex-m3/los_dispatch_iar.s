@@ -58,31 +58,31 @@ OS_TASK_STATUS_RUNNING      EQU     0x0010
     REQUIRE8
 
 LOS_StartToRun
-    ldr     r4, =OS_NVIC_SYSPRI2
-    ldr     r5, =OS_NVIC_PENDSV_PRI
-    str     r5, [r4]
+    LDR     R4, =OS_NVIC_SYSPRI2
+    LDR     R5, =OS_NVIC_PENDSV_PRI
+    STR     R5, [R4]
 
-    ldr     r0, =g_bTaskScheduled
-    movs    r1, #1
-    str     r1, [r0]
+    LDR     R0, =g_bTaskScheduled
+    MOVS    R1, #1
+    STR     R1, [R0]
 
-    movs    r0, #2
-    msr     CONTROL, r0
+    MOVS    R0, #2
+    MSR     CONTROL, R0
 
 
-    ldr     r0, =g_stLosTask
-    ldr     r2, [r0, #4]
-    ldr     r0, =g_stLosTask
-    STR     r2, [r0]
+    LDR     R0, =g_stLosTask
+    LDR     R2, [R0, #4]
+    LDR     R0, =g_stLosTask
+    STR     R2, [R0]
 
-    ldr     r3, =g_stLosTask
-    ldr     r0, [r3]
-    ldrh    r7, [r0 , #4]
-    movs    r8,  #OS_TASK_STATUS_RUNNING
-    orr     r7, r8
-    strh    R7,  [R0 , #4]
+    LDR     R3, =g_stLosTask
+    LDR     R0, [R3]
+    LDRH    R7, [R0 , #4]
+    MOV     R8,  #OS_TASK_STATUS_RUNNING
+    ORR     R7, R7, R8
+    STRH    R7,  [R0 , #4]
 
-    ldr     r12, [r0]
+    LDR     r12, [r0]
     ADD     R12, R12, #36 ;#100
 
     LDMFD   R12!, {R0-R7}
@@ -150,7 +150,7 @@ TaskSwitch
 
     LDRH    R7, [R6 , #4]
     MOV     R8,#OS_TASK_STATUS_RUNNING
-    BIC     R7, R8 ;BIC     R7, R7, R8
+    BIC     R7, R7, R8 ;BIC     R7, R7, R8
     STRH    R7, [R6 , #4]
 
 
@@ -161,7 +161,7 @@ TaskSwitch
 
     LDRH    R7, [R0 , #4]
     MOV     R8,  #OS_TASK_STATUS_RUNNING
-    ORR     R7, R8;ORR     R7, R7, R8
+    ORR     R7, R7, R8;ORR     R7, R7, R8
     STRH    R7,  [R0 , #4]
 
     LDR     R1,   [R0]
