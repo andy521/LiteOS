@@ -45,6 +45,9 @@ extern "C" {
 #endif /* __cpluscplus */
 #endif /* __cpluscplus */
 
+extern UINT32 LOS_IntLock(void);
+extern void LOS_IntRestore(UINT32 mask);
+
 LITE_OS_SEC_BSS UINT32  g_uwCyclesPerTick;
 
 /*lint -save -e40 -e10 -e26 -e1013*/

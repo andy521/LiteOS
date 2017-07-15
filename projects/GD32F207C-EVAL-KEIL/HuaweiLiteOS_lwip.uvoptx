@@ -451,7 +451,7 @@
 
   <Group>
     <GroupName>cpu/cm3</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -507,7 +507,7 @@
 
   <Group>
     <GroupName>config</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -547,7 +547,7 @@
 
   <Group>
     <GroupName>example</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -842,7 +842,7 @@
   </Group>
 
   <Group>
-    <GroupName>library</GroupName>
+    <GroupName>lwip</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -854,8 +854,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_cau.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_cau.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\api\netbuf.c</PathWithFileName>
+      <FilenameWithoutPath>netbuf.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -866,8 +866,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_adc.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_adc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\api\api_lib.c</PathWithFileName>
+      <FilenameWithoutPath>api_lib.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -878,8 +878,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_bkp.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_bkp.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\api\api_msg.c</PathWithFileName>
+      <FilenameWithoutPath>api_msg.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -890,8 +890,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_can.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_can.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\api\err.c</PathWithFileName>
+      <FilenameWithoutPath>err.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -902,8 +902,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_cau_aes.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_cau_aes.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\api\netdb.c</PathWithFileName>
+      <FilenameWithoutPath>netdb.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -914,8 +914,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_cau_des.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_cau_des.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\api\netifapi.c</PathWithFileName>
+      <FilenameWithoutPath>netifapi.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -926,8 +926,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_cau_tdes.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_cau_tdes.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\api\sockets.c</PathWithFileName>
+      <FilenameWithoutPath>sockets.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -938,8 +938,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_crc.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_crc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\api\tcpip.c</PathWithFileName>
+      <FilenameWithoutPath>tcpip.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -950,8 +950,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_dac.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_dac.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\def.c</PathWithFileName>
+      <FilenameWithoutPath>def.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -962,8 +962,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_dbg.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_dbg.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\inet_chksum.c</PathWithFileName>
+      <FilenameWithoutPath>inet_chksum.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -974,8 +974,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_dci.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_dci.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\init.c</PathWithFileName>
+      <FilenameWithoutPath>init.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -986,8 +986,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_dma.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_dma.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ip.c</PathWithFileName>
+      <FilenameWithoutPath>ip.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -998,8 +998,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_enet.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_enet.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\mem.c</PathWithFileName>
+      <FilenameWithoutPath>mem.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1010,8 +1010,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_exmc.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_exmc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\memp.c</PathWithFileName>
+      <FilenameWithoutPath>memp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1022,8 +1022,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_exti.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_exti.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\netif.c</PathWithFileName>
+      <FilenameWithoutPath>netif.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1034,8 +1034,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_fmc.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_fmc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\pbuf.c</PathWithFileName>
+      <FilenameWithoutPath>pbuf.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1046,8 +1046,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_fwdgt.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_fwdgt.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\raw.c</PathWithFileName>
+      <FilenameWithoutPath>raw.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1058,8 +1058,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_gpio.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_gpio.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\stats.c</PathWithFileName>
+      <FilenameWithoutPath>stats.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1070,8 +1070,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_hau.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_hau.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\sys.c</PathWithFileName>
+      <FilenameWithoutPath>sys.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1082,8 +1082,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_hau_sha_md5.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_hau_sha_md5.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\tcp.c</PathWithFileName>
+      <FilenameWithoutPath>tcp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1094,8 +1094,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_i2c.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_i2c.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\tcp_in.c</PathWithFileName>
+      <FilenameWithoutPath>tcp_in.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1106,8 +1106,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_misc.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_misc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\tcp_out.c</PathWithFileName>
+      <FilenameWithoutPath>tcp_out.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1118,8 +1118,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_pmu.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_pmu.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\timeouts.c</PathWithFileName>
+      <FilenameWithoutPath>timeouts.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1130,8 +1130,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_rcu.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_rcu.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\udp.c</PathWithFileName>
+      <FilenameWithoutPath>udp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1142,8 +1142,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_rtc.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_rtc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\autoip.c</PathWithFileName>
+      <FilenameWithoutPath>autoip.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1154,8 +1154,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_sdio.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_sdio.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\dhcp.c</PathWithFileName>
+      <FilenameWithoutPath>dhcp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1166,8 +1166,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_spi.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_spi.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\etharp.c</PathWithFileName>
+      <FilenameWithoutPath>etharp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1178,8 +1178,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_timer.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_timer.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\icmp.c</PathWithFileName>
+      <FilenameWithoutPath>icmp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1190,8 +1190,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_tli.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_tli.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\igmp.c</PathWithFileName>
+      <FilenameWithoutPath>igmp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1202,8 +1202,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_trng.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_trng.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\ip4.c</PathWithFileName>
+      <FilenameWithoutPath>ip4.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1214,8 +1214,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_usart.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_usart.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\ip4_addr.c</PathWithFileName>
+      <FilenameWithoutPath>ip4_addr.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1226,8 +1226,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_wwdgt.c</PathWithFileName>
-      <FilenameWithoutPath>gd32f20x_wwdgt.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\ip4_frag.c</PathWithFileName>
+      <FilenameWithoutPath>ip4_frag.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1238,418 +1238,14 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\GD32F207_Library\CMSIS\GD\GD32F20x\Source\system_gd32f20x.c</PathWithFileName>
-      <FilenameWithoutPath>system_gd32f20x.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-  </Group>
-
-  <Group>
-    <GroupName>lwip</GroupName>
-    <tvExp>1</tvExp>
-    <tvExpOptDlg>0</tvExpOptDlg>
-    <cbSel>0</cbSel>
-    <RteFlg>0</RteFlg>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>77</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\api\netbuf.c</PathWithFileName>
-      <FilenameWithoutPath>netbuf.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>78</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\api\api_lib.c</PathWithFileName>
-      <FilenameWithoutPath>api_lib.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>79</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\api\api_msg.c</PathWithFileName>
-      <FilenameWithoutPath>api_msg.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>80</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\api\err.c</PathWithFileName>
-      <FilenameWithoutPath>err.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>81</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\api\netdb.c</PathWithFileName>
-      <FilenameWithoutPath>netdb.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>82</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\api\netifapi.c</PathWithFileName>
-      <FilenameWithoutPath>netifapi.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>83</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\api\sockets.c</PathWithFileName>
-      <FilenameWithoutPath>sockets.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>84</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\api\tcpip.c</PathWithFileName>
-      <FilenameWithoutPath>tcpip.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>85</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\def.c</PathWithFileName>
-      <FilenameWithoutPath>def.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>86</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\inet_chksum.c</PathWithFileName>
-      <FilenameWithoutPath>inet_chksum.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>87</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\init.c</PathWithFileName>
-      <FilenameWithoutPath>init.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>88</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ip.c</PathWithFileName>
-      <FilenameWithoutPath>ip.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>89</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\mem.c</PathWithFileName>
-      <FilenameWithoutPath>mem.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>90</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\memp.c</PathWithFileName>
-      <FilenameWithoutPath>memp.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>91</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\netif.c</PathWithFileName>
-      <FilenameWithoutPath>netif.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>92</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\pbuf.c</PathWithFileName>
-      <FilenameWithoutPath>pbuf.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>93</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\raw.c</PathWithFileName>
-      <FilenameWithoutPath>raw.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>94</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\stats.c</PathWithFileName>
-      <FilenameWithoutPath>stats.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>95</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\sys.c</PathWithFileName>
-      <FilenameWithoutPath>sys.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>96</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\tcp.c</PathWithFileName>
-      <FilenameWithoutPath>tcp.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>97</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\tcp_in.c</PathWithFileName>
-      <FilenameWithoutPath>tcp_in.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>98</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\tcp_out.c</PathWithFileName>
-      <FilenameWithoutPath>tcp_out.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>99</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\timeouts.c</PathWithFileName>
-      <FilenameWithoutPath>timeouts.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>100</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\udp.c</PathWithFileName>
-      <FilenameWithoutPath>udp.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>101</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\autoip.c</PathWithFileName>
-      <FilenameWithoutPath>autoip.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>102</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\dhcp.c</PathWithFileName>
-      <FilenameWithoutPath>dhcp.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>103</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\etharp.c</PathWithFileName>
-      <FilenameWithoutPath>etharp.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>104</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\icmp.c</PathWithFileName>
-      <FilenameWithoutPath>icmp.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>105</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\igmp.c</PathWithFileName>
-      <FilenameWithoutPath>igmp.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>106</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\ip4.c</PathWithFileName>
-      <FilenameWithoutPath>ip4.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>107</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\ip4_addr.c</PathWithFileName>
-      <FilenameWithoutPath>ip4_addr.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>108</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\components\lwip-2.0.2\core\ipv4\ip4_frag.c</PathWithFileName>
-      <FilenameWithoutPath>ip4_frag.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>109</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
       <PathWithFileName>..\..\platform\GD32F207C-EVAL\lwip-port\netif\ethernetif.c</PathWithFileName>
       <FilenameWithoutPath>ethernetif.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>110</FileNumber>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>77</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1660,14 +1256,418 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>111</FileNumber>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>78</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\components\lwip-2.0.2\netif\ethernet.c</PathWithFileName>
       <FilenameWithoutPath>ethernet.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+  </Group>
+
+  <Group>
+    <GroupName>library</GroupName>
+    <tvExp>0</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>79</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_adc.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_adc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>80</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_bkp.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_bkp.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>81</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_can.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_can.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>82</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_cau.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_cau.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>83</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_cau_aes.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_cau_aes.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>84</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_cau_des.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_cau_des.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>85</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_cau_tdes.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_cau_tdes.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>86</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_crc.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_crc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>87</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_dac.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_dac.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>88</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_dbg.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_dbg.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>89</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_dci.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_dci.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>90</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_dma.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_dma.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>91</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_enet.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_enet.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>92</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_exmc.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_exmc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>93</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_exti.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_exti.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>94</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_fmc.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_fmc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>95</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_fwdgt.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_fwdgt.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>96</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_gpio.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_gpio.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>97</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_hau.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_hau.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>98</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_hau_sha_md5.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_hau_sha_md5.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>99</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_i2c.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_i2c.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>100</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_misc.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_misc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>101</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_pmu.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_pmu.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>102</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_rcu.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_rcu.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>103</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_rtc.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_rtc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>104</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_sdio.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_sdio.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>105</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_spi.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_spi.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>106</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_timer.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_timer.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>107</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_tli.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_tli.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>108</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_trng.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_trng.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>109</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_usart.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_usart.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>110</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\GD32F20x_standard_peripheral\Source\gd32f20x_wwdgt.c</PathWithFileName>
+      <FilenameWithoutPath>gd32f20x_wwdgt.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>10</GroupNumber>
+      <FileNumber>111</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\platform\GD32F207C-EVAL\GD32F207_Library\CMSIS\GD\GD32F20x\Source\system_gd32f20x.c</PathWithFileName>
+      <FilenameWithoutPath>system_gd32f20x.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

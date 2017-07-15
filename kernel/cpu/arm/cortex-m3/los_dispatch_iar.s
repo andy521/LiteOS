@@ -32,21 +32,23 @@
  ; applicable export control laws and regulations.
  ;---------------------------------------------------------------------------*/
 
-        PRESERVE8
+    PRESERVE8
 
-        EXPORT  LOS_IntLock
-        EXPORT  LOS_IntUnLock
-        EXPORT  LOS_IntRestore
-        EXPORT  LOS_StartToRun
-        EXPORT  osTaskSchedule
-        EXPORT  PendSV_Handler
-        EXPORT  LOS_IntNumGet
-        EXPORT  osDisableIRQ
-        
-        IMPORT  g_stLosTask
-        IMPORT  g_pfnTskSwitchHook
-        IMPORT  g_bTaskScheduled
+    
+    EXPORT  LOS_IntLock
+    EXPORT  LOS_IntUnLock
+    EXPORT  LOS_IntRestore
+    EXPORT  LOS_StartToRun
+    EXPORT  osTaskSchedule
+    EXPORT  PendSV_Handler
+    EXPORT  LOS_IntNumGet
+    EXPORT  osDisableIRQ
 
+    IMPORT  g_stLosTask
+    IMPORT  g_pfnTskSwitchHook
+    IMPORT  g_bTaskScheduled
+    
+    
 OS_NVIC_INT_CTRL            EQU     0xE000ED04
 OS_NVIC_SYSPRI2             EQU     0xE000ED20
 OS_NVIC_PENDSV_PRI          EQU     0xF0F00000
@@ -56,7 +58,7 @@ OS_TASK_STATUS_RUNNING      EQU     0x0010
     SECTION    .text:CODE(2)
     THUMB
     REQUIRE8
-
+    
 LOS_StartToRun
     LDR     R4, =OS_NVIC_SYSPRI2
     LDR     R5, =OS_NVIC_PENDSV_PRI

@@ -4,6 +4,7 @@
 
 #include "los_bsp_uart.h"
 #include "gd32f20x_gpio.h"
+//#include "gd32f20x_uart.h"
 
 int fputc(int ch, FILE *f)
 {

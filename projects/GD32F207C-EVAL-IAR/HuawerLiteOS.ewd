@@ -44,7 +44,7 @@
                 </option>
                 <option>
                     <name>MemFile</name>
-                    <state>$TOOLKIT_DIR$\CONFIG\debugger\SiliconLaboratories\EFM32HG322F64.ddf</state>
+                    <state>$TOOLKIT_DIR$\CONFIG\debugger\ST\STM32F207VC.ddf</state>
                 </option>
                 <option>
                     <name>RunToEnable</name>
@@ -88,7 +88,7 @@
                 </option>
                 <option>
                     <name>OCLastSavedByProductVersion</name>
-                    <state>8.11.1.13270</state>
+                    <state>8.11.2.13604</state>
                 </option>
                 <option>
                     <name>UseFlashLoader</name>
@@ -112,7 +112,7 @@
                 </option>
                 <option>
                     <name>FlashLoadersV3</name>
-                    <state>$TOOLKIT_DIR$\config\flashloader\SiliconLaboratories\FlashEFM32M0P.board</state>
+                    <state>$TOOLKIT_DIR$\config\flashloader\ST\FlashSTM32F205xC.board</state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
@@ -288,7 +288,7 @@
                 <option>
                     <name>CMSISDAPResetList</name>
                     <version>1</version>
-                    <state>10</state>
+                    <state>4</state>
                 </option>
                 <option>
                     <name>CMSISDAPHWResetDuration</name>
@@ -308,7 +308,7 @@
                 </option>
                 <option>
                     <name>CMSISDAPInterfaceRadio</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CMSISDAPInterfaceCmdLine</name>
@@ -325,7 +325,7 @@
                 <option>
                     <name>CMSISDAPJtagSpeedList</name>
                     <version>0</version>
-                    <state>0</state>
+                    <state>6</state>
                 </option>
                 <option>
                     <name>CMSISDAPBreakpointRadio</name>
@@ -425,7 +425,7 @@
                 </option>
                 <option>
                     <name>CMSISDAPSelectedCPUBehaviour</name>
-                    <state>0</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>ICpuName</name>
@@ -1360,6 +1360,10 @@
             </plugin>
             <plugin>
                 <file>$TOOLKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
+                <loadFlag>0</loadFlag>
+            </plugin>
+            <plugin>
+                <file>$TOOLKIT_DIR$\plugins\rtos\Mbed\MbedArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
@@ -2763,6 +2767,10 @@
             </plugin>
             <plugin>
                 <file>$TOOLKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
+                <loadFlag>0</loadFlag>
+            </plugin>
+            <plugin>
+                <file>$TOOLKIT_DIR$\plugins\rtos\Mbed\MbedArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
