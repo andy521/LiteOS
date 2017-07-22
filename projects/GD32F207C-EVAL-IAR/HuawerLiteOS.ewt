@@ -2326,6 +2326,9 @@
             <file>
                 <name>$PROJ_DIR$\..\..\kernel\config\los_config.c</name>
             </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\platform\GD32F207C-EVAL\lwip-port\lwipopts.h</name>
+            </file>
         </group>
         <group>
             <name>cpu/m3</name>
@@ -2684,7 +2687,19 @@
         <group>
             <name>user</name>
             <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver\httpserver-netconn.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver\httpserver-netconn.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\user\main.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\mqtt\mqtt.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\ping\ping.c</name>
             </file>
         </group>
     </group>

@@ -266,7 +266,7 @@ a lot of data that needs to be copied, this should be set high. */
 #define SYS_STATS               1
 #endif /* LWIP_STATS */
 
-//#define LWIP_NOASSERT
+#define LWIP_NOASSERT
 //#define LWIP_DEBUG
 #define TCP_DEBUG                       LWIP_DBG_OFF
 #define ETHARP_DEBUG                    LWIP_DBG_OFF

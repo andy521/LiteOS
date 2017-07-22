@@ -139,7 +139,7 @@ static void eth_nvic_config(void)
  Output      : None
  Return      : None
  *****************************************************************************/
-void ETH_IRQHandler(void)
+void ENET_IRQHandler(void)
 {
     /* clear the enet DMA Rx interrupt pending bits */
     enet_interrupt_flag_clear(ENET_DMA_INT_FLAG_RS_CLR);

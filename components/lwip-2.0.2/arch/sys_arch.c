@@ -313,10 +313,11 @@ void sys_mbox_free( sys_mbox_t *q )
     /* parameter check */
     LWIP_ASSERT("q != NULL", q != NULL);
     
-    while (LOS_QueueDelete(*q) != LOS_OK)
-    {
-        LOS_TaskDelay(1);
-    }
+    LOS_QueueDelete(*q);
+//    while (LOS_QueueDelete(*q) != LOS_OK)
+//    {
+//        LOS_TaskDelay(1);
+//    }
 }
 
 /*---------------------------------------------------------------------------*

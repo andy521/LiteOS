@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>STM32F207VC	ST STM32F207VC</state>
+                    <state>GD32F20xxC	GD GD32F20xxC</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -138,7 +138,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>STM32F207VC	ST STM32F207VC</state>
+                    <state>GD32F20xxC	GD GD32F20xxC</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -357,6 +357,7 @@
                     <state>$PROJ_DIR$\..\..\platform\GD32F207C-EVAL\lwip-port</state>
                     <state>$PROJ_DIR$\..\..\platform\GD32F207C-EVAL\lwip-port\arch</state>
                     <state>$PROJ_DIR$\..\..\platform\GD32F207C-EVAL\lwip-port\netif</state>
+                    <state>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -775,7 +776,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\GD32F207VC.icf</state>
+                    <state>$PROJ_DIR$\GD32F20xxC.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -2065,6 +2066,9 @@
             <file>
                 <name>$PROJ_DIR$\..\..\kernel\config\los_config.c</name>
             </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\platform\GD32F207C-EVAL\lwip-port\lwipopts.h</name>
+            </file>
         </group>
         <group>
             <name>cpu/m3</name>
@@ -2426,7 +2430,25 @@
         <group>
             <name>user</name>
             <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver\httpserver-netconn.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver\httpserver-netconn.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\user\main.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\mqtt\mqtt.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\ping\ping.c</name>
+                <excluded>
+                    <configuration>Debug</configuration>
+                </excluded>
             </file>
         </group>
     </group>

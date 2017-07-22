@@ -71,8 +71,7 @@
 #define PACK_STRUCT_USE_INCLUDES
 
 #define LWIP_ERROR(message, expression, handler) do { if (!(expression)) { \
-  printf("Assertion \"%s\" failed at line %d in %s\n", message, __LINE__, __FILE__); \
-  fflush(NULL);handler;} } while(0)
+  printf("Assertion \"%s\" failed at line %d in %s\n", message, __LINE__, __FILE__);} } while(0)
 
 #ifdef _MSC_VER
 /* C runtime functions redefined */

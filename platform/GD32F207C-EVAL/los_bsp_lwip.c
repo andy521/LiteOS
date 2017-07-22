@@ -14,8 +14,15 @@
 
 #include "los_bsp_lwip.h"
 
+#include "httpserver-netconn.h"
+
 struct netif netif;
 int errno = 0;
+
+void LOS_LwipAppInit(void)
+{
+    //http_server_netconn_init();
+}
 
 void LOS_EvbLwipInit(void)
 {
@@ -66,6 +73,8 @@ void LOS_EvbLwipInit(void)
 
     /* when the netif is fully configured this function must be called */
     netif_set_up(&netif);
+    
+    LOS_LwipAppInit();
 }
 
 /*****************************************************************************

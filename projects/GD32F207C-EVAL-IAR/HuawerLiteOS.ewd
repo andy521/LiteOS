@@ -44,11 +44,11 @@
                 </option>
                 <option>
                     <name>MemFile</name>
-                    <state>$TOOLKIT_DIR$\CONFIG\debugger\ST\STM32F207VC.ddf</state>
+                    <state>$TOOLKIT_DIR$\CONFIG\debugger\GD\GD32F20xxC.ddf</state>
                 </option>
                 <option>
                     <name>RunToEnable</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>RunToName</name>
@@ -92,7 +92,7 @@
                 </option>
                 <option>
                     <name>UseFlashLoader</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CLowLevel</name>
@@ -112,7 +112,7 @@
                 </option>
                 <option>
                     <name>FlashLoadersV3</name>
-                    <state>$TOOLKIT_DIR$\config\flashloader\ST\FlashSTM32F205xC.board</state>
+                    <state>$TOOLKIT_DIR$\config\flashloader\GD\FlashGD32F20xxC.board</state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
@@ -140,7 +140,7 @@
                 </option>
                 <option>
                     <name>OverrideDefFlashBoard</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OCImagesOffset1</name>
@@ -288,7 +288,7 @@
                 <option>
                     <name>CMSISDAPResetList</name>
                     <version>1</version>
-                    <state>4</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CMSISDAPHWResetDuration</name>
@@ -745,7 +745,7 @@
                 </option>
                 <option>
                     <name>JLinkInitialSpeed</name>
-                    <state>32</state>
+                    <state>1000</state>
                 </option>
                 <option>
                     <name>CCDoJlinkMultiTarget</name>
@@ -827,7 +827,7 @@
                 <option>
                     <name>CCJLinkResetList</name>
                     <version>6</version>
-                    <state>7</state>
+                    <state>8</state>
                 </option>
                 <option>
                     <name>CCJLinkInterfaceCmdLine</name>
@@ -888,7 +888,7 @@
                 </option>
                 <option>
                     <name>CCCpuClockEdit</name>
-                    <state>72.0</state>
+                    <state>120</state>
                 </option>
                 <option>
                     <name>CCSwoClockAuto</name>
