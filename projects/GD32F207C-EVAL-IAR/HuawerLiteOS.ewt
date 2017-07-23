@@ -2701,6 +2701,9 @@
             <file>
                 <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\ping\ping.c</name>
             </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\shell\shell.c</name>
+            </file>
         </group>
     </group>
 </project>

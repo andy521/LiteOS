@@ -42,16 +42,16 @@
 typedef UINTPTR sys_prot_t;
 
 typedef UINT32 sys_sem_t;
-#define sys_sem_valid(sem) ((sem) != NULL)
+#define sys_sem_valid(sem) (*(sem) != NULL)
 #define sys_sem_set_invalid(sem) (*(sem) = NULL)
 
 typedef UINT32 sys_mutex_t;
-#define sys_mutex_valid(mutex) ((mutex) != NULL)
+#define sys_mutex_valid(mutex) (*(mutex) != NULL)
 #define sys_mutex_set_invalid(mutex) (*(mutex) = NULL)
 
 typedef UINT32 sys_mbox_t;
 #define SYS_MBOX_NULL NULL
-#define sys_mbox_valid(q) ((q) != NULL)
+#define sys_mbox_valid(q) (*(q) != NULL)
 #define sys_mbox_set_invalid(q) (*(q) = NULL)
 
 /* DWORD (thread id) is used for sys_thread_t but we won't include windows.h */

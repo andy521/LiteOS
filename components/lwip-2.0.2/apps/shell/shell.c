@@ -48,7 +48,7 @@
 #ifdef WIN32
 #define NEWLINE "\r\n"
 #else /* WIN32 */
-#define NEWLINE "\n"
+#define NEWLINE "\r\n"
 #endif /* WIN32 */
 
 /** Define this to 1 if you want to echo back all received characters
@@ -170,6 +170,7 @@ static const char *stat_msgs_proto[] = {
 #endif /* PROTOCOL_STATS */
 #endif /* LWIP_STATS */
 
+static int errno = 0;
 /*-----------------------------------------------------------------------------------*/
 static void
 sendstr(const char *str, struct netconn *conn)

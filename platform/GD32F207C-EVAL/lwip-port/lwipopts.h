@@ -49,8 +49,8 @@
 #define TCP_LISTEN_BACKLOG         1
 
 #define LWIP_COMPAT_SOCKETS        1
-#define LWIP_SO_RCVTIMEO           1
-#define LWIP_SO_RCVBUF             1
+//#define LWIP_SO_RCVTIMEO           1
+//#define LWIP_SO_RCVBUF             1
 
 #define LWIP_TCPIP_CORE_LOCKING    1
 
@@ -249,8 +249,8 @@ a lot of data that needs to be copied, this should be set high. */
 //#define MEMP_NUM_NETCONN                16
 /* ---------- Statistics options ---------- */
 
-#define LWIP_STATS              1
-#define LWIP_STATS_DISPLAY      1
+#define LWIP_STATS              0
+#define LWIP_STATS_DISPLAY      0
 
 #if LWIP_STATS
 #define LINK_STATS              1

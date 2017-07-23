@@ -1,9 +1,13 @@
 /projects/GD32F207C-EVAL-KEIL/Listings
 /projects/GD32F207C-EVAL-KEIL/Objects
+/projects/GD32F207C-EVAL-KEIL/JLinkLog.txt
+/projects/GD32F207C-EVAL-KEIL/JLinkSettings.ini
+/projects/GD32F207C-EVAL-KEIL/EventRecorderStub.scvd
 *.Administrator
 /.vscode
 projects/GD32F207C-EVAL-IAR/Debug
 projects/GD32F207C-EVAL-IAR/settings
 projects/GD32F207C-EVAL-IAR/Release
+projects/GD32F207C-EVAL-IAR/BuildLog.log
 projects/GD32F207C-EVAL-IAR/BuildLog.log
 *.dep

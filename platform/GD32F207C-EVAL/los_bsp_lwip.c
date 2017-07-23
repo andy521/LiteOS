@@ -21,7 +21,8 @@ int errno = 0;
 
 void LOS_LwipAppInit(void)
 {
-    //http_server_netconn_init();
+    //shell_init();
+    http_server_netconn_init();
 }
 
 void LOS_EvbLwipInit(void)
