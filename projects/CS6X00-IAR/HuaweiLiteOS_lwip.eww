@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\HuaweiLiteOS.ewp</path>
+    <path>$WS_DIR$\HuaweiLiteOS_lwip.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

@@ -192,6 +192,7 @@ void LOS_EvbSetup(void)
     LOS_EvbUartInit();
     LOS_EvbLedInit();
     LOS_EvbKeyInit();
+    LOS_EvbLwipInit();
     return;
 }
 
@@ -208,3 +209,43 @@ void LOS_EvbTrace(const char *str)
     return;
 }
 
+/*!
+ * @brief delay us
+ *
+ * 这是一个使用while循环的微妙延时函数，误差在1%以内，基于系统时钟167MHZ。
+ * 但是会占用较多的cpu资源，所以使用在freertos启动前，freertos启动后可使用
+ * vTaskDelay或vTaskDelayUntil进行延时，这样几乎不会占用cpu资源
+ *
+ * @param[in] time_us : number of delay us
+ *
+ * @return void
+ */
+void cr600_delay_us(uint32_t time_us)
+{
+    volatile uint32_t delay;
+    volatile uint32_t us = time_us;
+
+    while (us--)
+    {
+        delay = 12;
+        while (delay--);
+    }
+}
+
+/*!
+ * @brief delay ms
+ *
+ * 这是一个使用while循环的微妙延时函数，误差在1%以内，基于系统时钟167MHZ。
+ * 但是会占用较多的cpu资源，所以使用在freertos启动前，freertos启动后可使用
+ * vTaskDelay或vTaskDelayUntil进行延时，这样几乎不会占用cpu资源
+ *
+ * @param[in] time_ms : number of delay ms
+ *
+ * @return void
+ */
+void cr600_delay_ms(uint32_t time_ms)
+{
+    volatile uint32_t ms = time_ms;
+    while (ms--)
+        cr600_delay_us(1000);
+}

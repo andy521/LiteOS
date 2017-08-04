@@ -11,3 +11,8 @@ projects/GD32F207C-EVAL-IAR/Release
 projects/GD32F207C-EVAL-IAR/BuildLog.log
 projects/GD32F207C-EVAL-IAR/BuildLog.log
 *.dep
+projects/CS6X00-IAR/Debug
+projects/CS6X00-IAR/settings
+projects/CS6X00-IAR/Release
+projects/CS6X00-IAR/BuildLog.log
+projects/CS6X00-IAR/BuildLog.log

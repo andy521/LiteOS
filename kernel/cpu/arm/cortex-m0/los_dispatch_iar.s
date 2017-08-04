@@ -92,14 +92,11 @@ LOS_StartToRun
     LDR     R3,[R3]
 
     MOV     LR, R5
-    MSR     xPSR, R7
+    MSR     PSR, R7
 
     CPSIE   I
     BX      R6
     NOP
-    ALIGN
-    AREA KERNEL, CODE, READONLY
-    THUMB
     
 LOS_IntNumGet
     MRS     R0, IPSR
@@ -192,5 +189,4 @@ TaskSwitch
     BX      LR
     
     NOP
-    ALIGN
     END
