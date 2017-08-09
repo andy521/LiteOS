@@ -87,6 +87,7 @@ static void low_level_init(struct netif *netif)
     printf("MAC: %02X-%02X-%02X-%02X-%02X-%02X\r\n", MAC_ADDR[0], MAC_ADDR[1], MAC_ADDR[2], MAC_ADDR[3], MAC_ADDR[4], MAC_ADDR[5]);
 
     ETH_Init(ETH_MII, KSZ8041_Init, *(MacAddr *)MAC_ADDR);
+    KSZ8041_Init();
     
     return;
 }

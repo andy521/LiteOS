@@ -66,6 +66,7 @@ int main(void)
     if (uwRet != LOS_OK) {
         return LOS_NOK;
     }
+    __asm volatile("cpsid i");
     /* Enable LiteOS system tick interrupt */
     LOS_EnableTick();
 

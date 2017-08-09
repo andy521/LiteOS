@@ -13,6 +13,8 @@
 #include "los_bsp_led.h"
 #include "los_bsp_key.h"
 #include "los_bsp_uart.h"
+#include "los_bsp_misc.h"
+#include "los_bsp_lwip.h"
 
 /* while use bsp code to start system tick, don't use LOS header */
 #define INCLUDE_LOS_HEADER
@@ -189,6 +191,7 @@ void LosAdapIrqDisable(unsigned int irqnum)
  *****************************************************************************/
 void LOS_EvbSetup(void)
 {
+    LOS_EvbMiscInit();
     LOS_EvbUartInit();
     LOS_EvbLedInit();
     LOS_EvbKeyInit();

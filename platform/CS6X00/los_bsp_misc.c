@@ -58,3 +58,15 @@ void ETH_TranspReceive(uint8_t *data, uint32_t size)
     /* free the eth rx buffer */
     ETH_FreeRxBuf(data);
 }
+
+void LOS_EvbMiscInit(void)
+{
+    /*init Flash*/
+    FLASH_InitTypeDef FLASH_InitStruct;
+    FLASH_InitStruct.FLASH_SPIMode = FLASH_SPIMode_Quad;
+    FLASH_InitStruct.FLASH_TimeOut = ENABLE;
+    FLASH_Init(&FLASH_InitStruct);
+    
+    RCC_PLL0Config(31250000, 32, 1, 1, ENABLE, ENABLE);
+    RCC_PLL1Config(31250000, 221, 6, 1, ENABLE, ENABLE);
+}
