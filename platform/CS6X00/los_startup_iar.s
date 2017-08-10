@@ -11,7 +11,8 @@
         EXTERN  __iar_program_start
         EXTERN  SystemInit
         PUBLIC  __vector_table
-		
+		PUBLIC  Reset_Handler
+        
 		DATA
 __vector_table
         DCD     sfe(CSTACK)
@@ -36,7 +37,7 @@ __vector_table
         DCD     RTC_IRQHandler            ; RTC
         DCD     TIMER_IRQHandler          ; TIMER
         DCD     ETH_IRQHandler            ; RTC
-        DCD     PLC_IRQHandler            ; PLC
+        DCD     0                         ; PLC
         DCD     SDIO_IRQHandler            ; MMC
         DCD     USB_IRQHandler            ; USB
         DCD     DMA_IRQHandler            ; DMA
@@ -118,11 +119,11 @@ TIMER_IRQHandler
 ETH_IRQHandler
         B ETH_IRQHandler
         
-        PUBWEAK PLC_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-PLC_IRQHandler
-        B PLC_IRQHandler
-        
+;        PUBWEAK PLC_IRQHandler
+;        SECTION .text:CODE:REORDER:NOROOT(1)
+;PLC_IRQHandler
+;        B PLC_IRQHandler
+;        
         PUBWEAK SDIO_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 SDIO_IRQHandler

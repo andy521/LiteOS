@@ -38,7 +38,7 @@
 #include <lwip/stats.h>
 #include <lwip/debug.h>
 #include <lwip/sys.h>
-#include "sys_arch.h"
+#include <arch/sys_arch.h>
 
 /* These functions are used for LiteOS only */
 

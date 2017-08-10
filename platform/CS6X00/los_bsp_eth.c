@@ -1,8 +1,4 @@
 #include "los_bsp_eth.h"
-#include "gd32f20x_eth.h"
-#include "gd32f20x_exti.h"
-
-#define DP83848_PHY_ADDRESS       0x01 /* Relative to GD32F207C-EVAL Board */
 
 void ETH_ParaInit(ETH_InitPara* ETH_InitParaStruct);
 

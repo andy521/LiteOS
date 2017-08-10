@@ -17,15 +17,15 @@
         <debug>1</debug>
         <option>
           <name>ExePath</name>
-          <state>Application\Exe</state>
+          <state>Debug\Exe</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>Application\Obj</state>
+          <state>Debug\Obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>Application\List</state>
+          <state>Debug\List</state>
         </option>
         <option>
           <name>Variant</name>
@@ -306,6 +306,11 @@
           <state>$PROJ_DIR$\..\..\kernel\link\iar</state>
           <state>$PROJ_DIR$\..\..\platform\CS6X00</state>
           <state>$PROJ_DIR$\..\..\platform\CS6X00\library\include</state>
+          <state>$PROJ_DIR$\..\..\components\lwip-2.0.2\include</state>
+          <state>$PROJ_DIR$\..\..\platform\CS6X00\lwip-port</state>
+          <state>$PROJ_DIR$\..\..\platform\CS6X00\lwip-port\netif</state>
+          <state>$PROJ_DIR$\..\..\platform\CS6X00\lwip-port\arch</state>
+          <state>$PROJ_DIR$\..\..\platform\CS6X00\devices</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -720,7 +725,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\..\..\platform\STM32F429I_DISCO\STM32F429I-LiteOS.icf</state>
+          <state>$PROJ_DIR$\clouder600_flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1895,6 +1900,12 @@
     </settings>
   </configuration>
   <group>
+    <name>devices</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\platform\CS6X00\devices\KSZ8041.c</name>
+    </file>
+  </group>
+  <group>
     <name>Huawei_LiteOS</name>
     <group>
       <name>config</name>
@@ -1919,6 +1930,9 @@
     </group>
     <group>
       <name>example</name>
+      <excluded>
+        <configuration>Debug</configuration>
+      </excluded>
       <file>
         <name>$PROJ_DIR$\..\..\example\api\los_api_dynamic_mem.c</name>
       </file>
@@ -2025,10 +2039,22 @@
         <name>$PROJ_DIR$\..\..\platform\CS6X00\los_bsp_adapter.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\..\platform\CS6X00\los_bsp_eth.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\platform\CS6X00\los_bsp_key.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\platform\CS6X00\los_bsp_led.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\platform\CS6X00\los_bsp_lwip.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\platform\CS6X00\los_bsp_misc.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\platform\CS6X00\los_bsp_uart.c</name>
@@ -2046,6 +2072,117 @@
         <name>$PROJ_DIR$\..\..\user\main.c</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>lwip</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\api\api_lib.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\api\api_msg.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ipv4\autoip.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\def.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ipv4\dhcp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\dns.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\api\err.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ipv4\etharp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\netif\ethernet.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\platform\CS6X00\lwip-port\netif\ethernetif.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ipv4\icmp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ipv4\igmp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\inet_chksum.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\init.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ip.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ipv4\ip4.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ipv4\ip4_addr.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\ipv4\ip4_frag.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\mem.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\memp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\api\netbuf.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\api\netdb.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\netif.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\api\netifapi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\pbuf.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\raw.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\api\sockets.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\stats.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\sys.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\arch\sys_arch.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\tcp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\tcp_in.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\tcp_out.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\api\tcpip.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\timeouts.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\core\udp.c</name>
+    </file>
   </group>
 </project>
 
