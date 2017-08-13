@@ -12,6 +12,7 @@
 #include "los_bsp_led.h"
 #include "los_bsp_key.h"
 #include "los_bsp_uart.h"
+#include "los_bsp_lwip.h"
 
 #include "stm32f4xx.h"
 
@@ -186,6 +187,7 @@ void LOS_EvbSetup(void)
     LOS_EvbUartInit();
     LOS_EvbLedInit();
     LOS_EvbKeyInit();
+    LOS_EvbLwipInit();
     return;
 }
 
