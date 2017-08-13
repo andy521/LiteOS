@@ -66,7 +66,7 @@ int main(void)
     if (uwRet != LOS_OK) {
         return LOS_NOK;
     }
-    __asm volatile("cpsid i");
+    //__asm volatile("cpsid i");
     /* Enable LiteOS system tick interrupt */
     LOS_EnableTick();
 
@@ -79,9 +79,9 @@ int main(void)
     printf("this is LiteOS lwip port \r\n");
     //LOS_Demo_Entry();
 
-    //LOS_Inspect_Entry();
+    LOS_Inspect_Entry();
 
-    LOS_BoadExampleEntry();
+    //LOS_BoadExampleEntry();
 
     /* Kernel start to run */
     LOS_Start();
