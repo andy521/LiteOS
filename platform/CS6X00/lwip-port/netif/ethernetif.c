@@ -87,6 +87,7 @@ static void low_level_init(struct netif *netif)
     printf("MAC: %02X-%02X-%02X-%02X-%02X-%02X\r\n", MAC_ADDR[0], MAC_ADDR[1], MAC_ADDR[2], MAC_ADDR[3], MAC_ADDR[4], MAC_ADDR[5]);
 
     ETH_Init(ETH_MII, KSZ8041_Init, *(MacAddr *)MAC_ADDR);
+    
     KSZ8041_Init();
     
     return;
@@ -192,10 +193,7 @@ void ETH_LinkReceiveToStack(uint8_t *data, uint32_t size)
         ETH_FreeRxBuf(data);
         return;
     }
-    
-    /* send queue error, need to free rx buffer */
-    ETH_FreeRxBuf(data);
-    
+
     /* we allocate a pbuf chain of pbufs from the Lwip buffer pool */
     p = pbuf_alloc(PBUF_RAW, size, PBUF_POOL);
     
@@ -206,6 +204,10 @@ void ETH_LinkReceiveToStack(uint8_t *data, uint32_t size)
             l = l + q->len;
         }
     }
+    
+    
+    /* need to free rx buffer */
+    ETH_FreeRxBuf(data);
     
     /* no packet could be read, silently ignore this */
     if (p == NULL) return;

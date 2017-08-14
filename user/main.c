@@ -79,7 +79,7 @@ int main(void)
     printf("this is LiteOS lwip port \r\n");
     //LOS_Demo_Entry();
 
-    LOS_Inspect_Entry();
+//    LOS_Inspect_Entry();
 
     //LOS_BoadExampleEntry();
 

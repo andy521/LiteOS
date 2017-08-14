@@ -192,7 +192,6 @@ a lot of data that needs to be copied, this should be set high. */
 
 /* ---------- ARP options ---------- */
 #define LWIP_ARP                1
-
 #define ARP_TABLE_SIZE          10
 #define ARP_QUEUEING            1
 

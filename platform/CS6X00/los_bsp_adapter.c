@@ -13,8 +13,6 @@
 #include "los_bsp_led.h"
 #include "los_bsp_key.h"
 #include "los_bsp_uart.h"
-#include "los_bsp_misc.h"
-#include "los_bsp_lwip.h"
 
 /* while use bsp code to start system tick, don't use LOS header */
 #define INCLUDE_LOS_HEADER
@@ -181,6 +179,11 @@ void LosAdapIrqDisable(unsigned int irqnum)
     return;
 }
 
+static void LOS_EvbRccInit(void)
+{
+    RCC_PLL0Config(31250000, 32, 1, 1, ENABLE, ENABLE);
+    RCC_PLL1Config(31250000, 221, 6, 1, ENABLE, ENABLE);
+}
 
 /*****************************************************************************
  Function    : LOS_EvbSetup
@@ -191,7 +194,7 @@ void LosAdapIrqDisable(unsigned int irqnum)
  *****************************************************************************/
 void LOS_EvbSetup(void)
 {
-    LOS_EvbMiscInit();
+    LOS_EvbRccInit();
     LOS_EvbUartInit();
     LOS_EvbLedInit();
     LOS_EvbKeyInit();
@@ -215,9 +218,9 @@ void LOS_EvbTrace(const char *str)
 /*!
  * @brief delay us
  *
- * ÕâÊÇÒ»¸öÊ¹ÓÃwhileÑ­»·µÄÎ¢ÃîÑÓÊ±º¯Êı£¬Îó²îÔÚ1%ÒÔÄÚ£¬»ùÓÚÏµÍ³Ê±ÖÓ167MHZ¡£
- * µ«ÊÇ»áÕ¼ÓÃ½Ï¶àµÄcpu×ÊÔ´£¬ËùÒÔÊ¹ÓÃÔÚfreertosÆô¶¯Ç°£¬freertosÆô¶¯ºó¿ÉÊ¹ÓÃ
- * vTaskDelay»òvTaskDelayUntil½øĞĞÑÓÊ±£¬ÕâÑù¼¸ºõ²»»áÕ¼ÓÃcpu×ÊÔ´
+ * è¿™æ˜¯ä¸€ä¸ªä½¿ç”¨whileå¾ªç¯çš„å¾®å¦™å»¶æ—¶å‡½æ•°ï¼Œè¯¯å·®åœ¨1%ä»¥å†…ï¼ŒåŸºäºç³»ç»Ÿæ—¶é’Ÿ167MHZã€‚
+ * ä½†æ˜¯ä¼šå ç”¨è¾ƒå¤šçš„cpuèµ„æºï¼Œæ‰€ä»¥ä½¿ç”¨åœ¨freertoså¯åŠ¨å‰ï¼Œfreertoså¯åŠ¨åå¯ä½¿ç”¨
+ * vTaskDelayæˆ–vTaskDelayUntilè¿›è¡Œå»¶æ—¶ï¼Œè¿™æ ·å‡ ä¹ä¸ä¼šå ç”¨cpuèµ„æº
  *
  * @param[in] time_us : number of delay us
  *
@@ -238,9 +241,9 @@ void cr600_delay_us(uint32_t time_us)
 /*!
  * @brief delay ms
  *
- * ÕâÊÇÒ»¸öÊ¹ÓÃwhileÑ­»·µÄÎ¢ÃîÑÓÊ±º¯Êı£¬Îó²îÔÚ1%ÒÔÄÚ£¬»ùÓÚÏµÍ³Ê±ÖÓ167MHZ¡£
- * µ«ÊÇ»áÕ¼ÓÃ½Ï¶àµÄcpu×ÊÔ´£¬ËùÒÔÊ¹ÓÃÔÚfreertosÆô¶¯Ç°£¬freertosÆô¶¯ºó¿ÉÊ¹ÓÃ
- * vTaskDelay»òvTaskDelayUntil½øĞĞÑÓÊ±£¬ÕâÑù¼¸ºõ²»»áÕ¼ÓÃcpu×ÊÔ´
+ * è¿™æ˜¯ä¸€ä¸ªä½¿ç”¨whileå¾ªç¯çš„å¾®å¦™å»¶æ—¶å‡½æ•°ï¼Œè¯¯å·®åœ¨1%ä»¥å†…ï¼ŒåŸºäºç³»ç»Ÿæ—¶é’Ÿ167MHZã€‚
+ * ä½†æ˜¯ä¼šå ç”¨è¾ƒå¤šçš„cpuèµ„æºï¼Œæ‰€ä»¥ä½¿ç”¨åœ¨freertoså¯åŠ¨å‰ï¼Œfreertoså¯åŠ¨åå¯ä½¿ç”¨
+ * vTaskDelayæˆ–vTaskDelayUntilè¿›è¡Œå»¶æ—¶ï¼Œè¿™æ ·å‡ ä¹ä¸ä¼šå ç”¨cpuèµ„æº
  *
  * @param[in] time_ms : number of delay ms
  *
