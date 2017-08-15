@@ -13,6 +13,7 @@
 #include "los_bsp_led.h"
 #include "los_bsp_key.h"
 #include "los_bsp_uart.h"
+#include "los_bsp_lwip.h"
 
 /* while use bsp code to start system tick, don't use LOS header */
 #define INCLUDE_LOS_HEADER
@@ -28,7 +29,7 @@
     global var
  *****************************************************************************/
 /* current system Freq , should be set according to the microchip */
-const unsigned int sys_clk_freq = 72000000;
+const unsigned int sys_clk_freq = 125000000;
 
 /* tick count per second , don't change this */
 const unsigned int tick_per_second = 1000;
@@ -194,6 +195,8 @@ static void LOS_EvbRccInit(void)
  *****************************************************************************/
 void LOS_EvbSetup(void)
 {
+    __asm volatile("cpsid i");
+    
     LOS_EvbRccInit();
     LOS_EvbUartInit();
     LOS_EvbLedInit();

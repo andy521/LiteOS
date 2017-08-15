@@ -14,7 +14,8 @@
 
 #include "los_bsp_lwip.h"
 
-//#include "httpserver-netconn.h"
+#include "httpserver-netconn.h"
+#include "mqtt.h"
 
 struct netif netif;
 int errno = 0;
@@ -22,7 +23,7 @@ int errno = 0;
 void LOS_LwipAppInit(void)
 {
     //shell_init();
-//    http_server_netconn_init();
+    http_server_netconn_init();
 }
 
 void LOS_EvbLwipInit(void)

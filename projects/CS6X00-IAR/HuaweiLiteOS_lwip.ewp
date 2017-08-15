@@ -307,6 +307,7 @@
           <state>$PROJ_DIR$\..\..\platform\CS6X00</state>
           <state>$PROJ_DIR$\..\..\platform\CS6X00\library\include</state>
           <state>$PROJ_DIR$\..\..\components\lwip-2.0.2\include</state>
+          <state>$PROJ_DIR$\..\..\components\lwip-2.0.2\include\lwip\apps</state>
           <state>$PROJ_DIR$\..\..\platform\CS6X00\lwip-port</state>
           <state>$PROJ_DIR$\..\..\platform\CS6X00\lwip-port\netif</state>
           <state>$PROJ_DIR$\..\..\platform\CS6X00\lwip-port\arch</state>
@@ -661,7 +662,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>HuaweiLiteOS_stm32f429.out</state>
+          <state>cr600.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -1930,9 +1931,6 @@
     </group>
     <group>
       <name>example</name>
-      <excluded>
-        <configuration>Debug</configuration>
-      </excluded>
       <file>
         <name>$PROJ_DIR$\..\..\example\api\los_api_dynamic_mem.c</name>
       </file>
@@ -2180,7 +2178,16 @@
     <group>
       <name>user</name>
       <file>
+        <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver\httpserver-netconn.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\user\main.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\mqtt\mqtt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\app\mqtt_client.c</name>
       </file>
     </group>
   </group>
