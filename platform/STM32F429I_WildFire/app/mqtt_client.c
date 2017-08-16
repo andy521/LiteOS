@@ -211,7 +211,7 @@ void example_publish(mqtt_client_t *client, void *arg)
         *    至多一次，这一级别会确保消息到达，但消息可能会重复。即：>=1
         *    只有一次，确保消息只有一次到达。即：＝1。在一些要求比较严格的计费系统中，可以使用此级别
       */
-  u8_t qos = 2; /* 0 1 or 2, see MQTT specification */
+  u8_t qos = 1; /* 0 1 or 2, see MQTT specification */
     
     //=0 的意思应该是不保留有效负载（有效数据）
   u8_t retain = 0; /* No don't retain such crappy payload... */
@@ -253,7 +253,6 @@ LITE_OS_SEC_TEXT VOID mqtt_client_create(VOID)
         
         example_publish(&static_client,(void *)mqtt_pub_request_cb);
         
-        /* vTaskDelayUntil是绝对延迟，vTaskDelay是相对延迟。*/
         LOS_TaskDelay(2000);
     }
 }
