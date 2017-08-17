@@ -77,7 +77,7 @@ int main(void)
      */
     LOS_EvbSetup();//init the device on the dev baord
     printf("this is LiteOS lwip port \r\n");
-    mqtt_client_init();
+//    mqtt_client_init();
     //LOS_Demo_Entry();
 
     //LOS_Inspect_Entry();

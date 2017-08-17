@@ -17,3 +17,10 @@ projects/CS6X00-IAR/Release
 projects/CS6X00-IAR/BuildLog.log
 projects/CS6X00-IAR/BuildLog.log
 server/node_modules
+projects/STM32F429I_WildFire_IAR/Application/
+projects/STM32F429I_WildFire_IAR/BuildLog.log
+projects/STM32F429I_WildFire_IAR/settings/
+*/Debug/
+*/settings/
+*/BuildLog.log
+*/Application/

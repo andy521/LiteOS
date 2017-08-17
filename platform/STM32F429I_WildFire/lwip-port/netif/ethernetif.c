@@ -1,6 +1,7 @@
 /**
  * @file
- * Ethernet Interface for standalone applications (without RTOS)
+ * Ethernet Interface for standalone applications (without RTOS) - works only for 
+ * ethernet polling mode (polling for ethernet frame reception)
  *
  */
 
@@ -36,36 +37,35 @@
  *
  */
 
+#include "lwip/opt.h"
 #include "lwip/mem.h"
 #include "netif/etharp.h"
 #include "ethernetif.h"
-#include "gd32f20x_enet.h"
-
+#include "stm32f429_eth.h"
+//#include "netconf.h"
 #include <string.h>
 
+/* Network interface name */
+#define IFNAME0 'b'
+#define IFNAME1 'h'
 
-/* network interface name */
-#define IFNAME0 'G'
-#define IFNAME1 'D'
+#define MAC_ADDR        "\xF4\x83\xE1\x01\x01\x02"
 
-#define MAC_ADDR    "\xF4\x83\xE1\x01\x01\x14"
+/* Ethernet Rx & Tx DMA Descriptors */
+extern ETH_DMADESCTypeDef  DMARxDscrTab[ETH_RXBUFNB], DMATxDscrTab[ETH_TXBUFNB];
 
-/* ENET RxDMA/TxDMA descriptor */
-extern enet_descriptors_struct  rxdesc_tab[ENET_RXBUF_NUM], txdesc_tab[ENET_TXBUF_NUM];
+/* Ethernet Driver Receive buffers  */
+extern uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE]; 
 
-/* ENET receive buffer  */
-extern uint8_t rx_buff[ENET_RXBUF_NUM][ENET_RXBUF_SIZE]; 
+/* Ethernet Driver Transmit buffers */
+extern uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE]; 
 
-/* ENET transmit buffer */
-extern uint8_t tx_buff[ENET_TXBUF_NUM][ENET_TXBUF_SIZE]; 
+/* Global pointers to track current transmit and receive descriptors */
+extern ETH_DMADESCTypeDef  *DMATxDescToSet;
+extern ETH_DMADESCTypeDef  *DMARxDescToGet;
 
-/*global transmit and receive descriptors pointers */
-extern enet_descriptors_struct  *dma_current_txdesc;
-extern enet_descriptors_struct  *dma_current_rxdesc;
-
-/* preserve another ENET RxDMA/TxDMA ptp descriptor for normal mode */
-enet_descriptors_struct  ptp_txstructure[ENET_TXBUF_NUM];
-enet_descriptors_struct  ptp_rxstructure[ENET_RXBUF_NUM];
+/* Global pointer for last received frame infos */
+extern ETH_DMA_Rx_Frame_infos *DMA_RX_FRAME_infos;
 
 /**
  * In this function, the hardware should be initialized.
@@ -77,51 +77,47 @@ enet_descriptors_struct  ptp_rxstructure[ENET_RXBUF_NUM];
 static void low_level_init(struct netif *netif)
 {
 #ifdef CHECKSUM_BY_HARDWARE
-    int i; 
+  int i; 
 #endif
-    /* set MAC hardware address length */
-    netif->hwaddr_len = ETHARP_HWADDR_LEN;
+  /* set MAC hardware address length */
+  netif->hwaddr_len = ETHARP_HWADDR_LEN;
 
-    /* set MAC hardware address */
-    netif->hwaddr[0] =  MAC_ADDR[0];
-    netif->hwaddr[1] =  MAC_ADDR[1];
-    netif->hwaddr[2] =  MAC_ADDR[2];
-    netif->hwaddr[3] =  MAC_ADDR[3];
-    netif->hwaddr[4] =  MAC_ADDR[4];
-    netif->hwaddr[5] =  MAC_ADDR[5];
-    
-    /* initialize MAC address in ethernet MAC */ 
-    enet_mac_address_set(ENET_MAC_ADDRESS0, netif->hwaddr);
+  /* set MAC hardware address */
+  netif->hwaddr[0] =  MAC_ADDR[0];
+  netif->hwaddr[1] =  MAC_ADDR[1];
+  netif->hwaddr[2] =  MAC_ADDR[2];
+  netif->hwaddr[3] =  MAC_ADDR[3];
+  netif->hwaddr[4] =  MAC_ADDR[4];
+  netif->hwaddr[5] =  MAC_ADDR[5];
+  
+  /* initialize MAC address in ethernet MAC */ 
+  ETH_MACAddressConfig(ETH_MAC_Address0, netif->hwaddr); 
 
-    /* maximum transfer unit */
-    netif->mtu = 1500;
+  /* maximum transfer unit */
+  netif->mtu = 1500;
 
-    /* device capabilities */
-    /* don't set NETIF_FLAG_ETHARP if this device is not an ethernet one */
-    netif->flags = NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP;
+  /* device capabilities */
+  /* don't set NETIF_FLAG_ETHARP if this device is not an ethernet one */
+  netif->flags = NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP;
 
-    /* initialize descriptors list: chain/ring mode */
-    enet_descriptors_chain_init(ENET_DMA_TX);
-    enet_descriptors_chain_init(ENET_DMA_RX);
-
-    /* enable ethernet Rx interrrupt */
-    {   int i;
-        for(i=0; i<ENET_RXBUF_NUM; i++){ 
-           enet_rx_desc_immediate_receive_complete_interrupt(&rxdesc_tab[i]);
-        }
-    }
+  /* Initialize Tx Descriptors list: Chain Mode */
+  ETH_DMATxDescChainInit(DMATxDscrTab, &Tx_Buff[0][0], ETH_TXBUFNB);
+  /* Initialize Rx Descriptors list: Chain Mode  */
+  ETH_DMARxDescChainInit(DMARxDscrTab, &Rx_Buff[0][0], ETH_RXBUFNB);
 
 #ifdef CHECKSUM_BY_HARDWARE
-    /* enable the TCP, UDP and ICMP checksum insertion for the Tx frames */
-    for(i=0; i < ENET_TXBUF_NUM; i++){
-        enet_transmit_checksum_config(&txdesc_tab[i], ENET_CHECKSUM_TCPUDPICMP_FULL);
+  /* Enable the TCP, UDP and ICMP checksum insertion for the Tx frames */
+  for(i=0; i<ETH_TXBUFNB; i++)
+    {
+      ETH_DMATxDescChecksumInsertionConfig(&DMATxDscrTab[i], ETH_DMATxDesc_ChecksumTCPUDPICMPFull);
     }
-#endif /* CHECKSUM_BY_HARDWARE */
+#endif
 
-    /* note: TCP, UDP, ICMP checksum checking for received frame are enabled in DMA config */
+   /* Note: TCP, UDP, ICMP checksum checking for received frame are enabled in DMA config */
 
-    /* enable MAC and DMA transmission and reception */
-    enet_enable();
+  /* Enable MAC and DMA transmission and reception */
+  ETH_Start();
+
 }
 
 /**
@@ -142,25 +138,82 @@ static void low_level_init(struct netif *netif)
 
 static err_t low_level_output(struct netif *netif, struct pbuf *p)
 {
-    struct pbuf *q;
-    int framelength = 0;
-    uint8_t *buffer;
-    
-    buffer = (uint8_t *)(enet_desc_information_get(dma_current_txdesc, TXDESC_BUFFER_1_ADDR));
-    
-    /* copy frame from pbufs to driver buffers */
-    for(q = p; q != NULL; q = q->next){ 
-        memcpy((uint8_t *)&buffer[framelength], q->payload, q->len);
-        framelength = framelength + q->len;
+  err_t errval;
+  struct pbuf *q;
+  u8 *buffer =  (u8 *)(DMATxDescToSet->Buffer1Addr);
+  __IO ETH_DMADESCTypeDef *DmaTxDesc;
+  uint16_t framelength = 0;
+  uint32_t bufferoffset = 0;
+  uint32_t byteslefttocopy = 0;
+  uint32_t payloadoffset = 0;
+
+  DmaTxDesc = DMATxDescToSet;
+  bufferoffset = 0;
+
+  /* copy frame from pbufs to driver buffers */
+  for(q = p; q != NULL; q = q->next)
+    {
+      /* Is this buffer available? If not, goto error */
+      if((DmaTxDesc->Status & ETH_DMATxDesc_OWN) != (u32)RESET)
+      {
+        errval = ERR_BUF;
+        goto error;
+      }
+
+      /* Get bytes in current lwIP buffer */
+      byteslefttocopy = q->len;
+      payloadoffset = 0;
+
+      /* Check if the length of data to copy is bigger than Tx buffer size*/
+      while( (byteslefttocopy + bufferoffset) > ETH_TX_BUF_SIZE )
+      {
+        /* Copy data to Tx buffer*/
+        memcpy( (u8_t*)((u8_t*)buffer + bufferoffset), (u8_t*)((u8_t*)q->payload + payloadoffset), (ETH_TX_BUF_SIZE - bufferoffset) );
+
+        /* Point to next descriptor */
+        DmaTxDesc = (ETH_DMADESCTypeDef *)(DmaTxDesc->Buffer2NextDescAddr);
+
+        /* Check if the buffer is available */
+        if((DmaTxDesc->Status & ETH_DMATxDesc_OWN) != (u32)RESET)
+        {
+          errval = ERR_USE;
+          goto error;
+        }
+
+        buffer = (u8 *)(DmaTxDesc->Buffer1Addr);
+
+        byteslefttocopy = byteslefttocopy - (ETH_TX_BUF_SIZE - bufferoffset);
+        payloadoffset = payloadoffset + (ETH_TX_BUF_SIZE - bufferoffset);
+        framelength = framelength + (ETH_TX_BUF_SIZE - bufferoffset);
+        bufferoffset = 0;
+      }
+
+      /* Copy the remaining bytes */
+      memcpy( (u8_t*)((u8_t*)buffer + bufferoffset), (u8_t*)((u8_t*)q->payload + payloadoffset), byteslefttocopy );
+      bufferoffset = bufferoffset + byteslefttocopy;
+      framelength = framelength + byteslefttocopy;
     }
-    
-    /* note: padding and CRC for transmitted frame 
-       are automatically inserted by DMA */
+  
+  /* Note: padding and CRC for transmitted frame 
+     are automatically inserted by DMA */
 
-    /* transmit descriptors to give to DMA */ 
-    ENET_NOCOPY_FRAME_TRANSMIT(framelength);
+  /* Prepare transmit descriptors to give to DMA*/ 
+  ETH_Prepare_Transmit_Descriptors(framelength);
 
-    return ERR_OK;
+  errval = ERR_OK;
+
+error:
+  
+  /* When Transmit Underflow flag is set, clear it and issue a Transmit Poll Demand to resume transmission */
+  if ((ETH->DMASR & ETH_DMASR_TUS) != (uint32_t)RESET)
+  {
+    /* Clear TUS ETHERNET DMA flag */
+    ETH->DMASR = ETH_DMASR_TUS;
+
+    /* Resume DMA transmission*/
+    ETH->DMATPDR = 0;
+  }
+  return errval;
 }
 
 /**
@@ -170,34 +223,80 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
  * @param netif the lwip network interface structure for this ethernetif
  * @return a pbuf filled with the received packet (including MAC header)
  *         NULL on memory error
- */
+   */
 static struct pbuf * low_level_input(struct netif *netif)
 {
-    struct pbuf *p, *q;
-    u16_t len;
-    int l =0;
-    uint8_t *buffer;
-     
-    p = NULL;
-    
-    /* obtain the size of the packet and put it into the "len" variable. */
-    len = enet_desc_information_get(dma_current_rxdesc, RXDESC_FRAME_LENGTH);
-    buffer = (uint8_t *)(enet_desc_information_get(dma_current_rxdesc, RXDESC_BUFFER_1_ADDR));
-    
-    /* we allocate a pbuf chain of pbufs from the Lwip buffer pool */
-    p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
-    
-    /* copy received frame to pbuf chain */
-    if (p != NULL){
-        for (q = p; q != NULL; q = q->next){ 
-            memcpy((uint8_t *)q->payload, (u8_t*)&buffer[l], q->len);
-            l = l + q->len;
-        }    
-    }
+  struct pbuf *p, *q;
+  uint32_t len;
+  FrameTypeDef frame;
+  u8 *buffer;
+  __IO ETH_DMADESCTypeDef *DMARxDesc;
+  uint32_t bufferoffset = 0;
+  uint32_t payloadoffset = 0;
+  uint32_t byteslefttocopy = 0;
+  uint32_t i=0;  
   
-    ENET_NOCOPY_FRAME_RECEIVE();
+  /* get received frame */
+  frame = ETH_Get_Received_Frame();
+  
+  /* Obtain the size of the packet and put it into the "len" variable. */
+  len = frame.length;
+  buffer = (u8 *)frame.buffer;
+  
+  /* We allocate a pbuf chain of pbufs from the Lwip buffer pool */
+  p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
+  
+  if (p != NULL)
+  {
+    DMARxDesc = frame.descriptor;
+    bufferoffset = 0;
+    for(q = p; q != NULL; q = q->next)
+    {
+      byteslefttocopy = q->len;
+      payloadoffset = 0;
+      
+      /* Check if the length of bytes to copy in current pbuf is bigger than Rx buffer size*/
+      while( (byteslefttocopy + bufferoffset) > ETH_RX_BUF_SIZE )
+      {
+        /* Copy data to pbuf*/
+        memcpy( (u8_t*)((u8_t*)q->payload + payloadoffset), (u8_t*)((u8_t*)buffer + bufferoffset), (ETH_RX_BUF_SIZE - bufferoffset));
+        
+        /* Point to next descriptor */
+        DMARxDesc = (ETH_DMADESCTypeDef *)(DMARxDesc->Buffer2NextDescAddr);
+        buffer = (unsigned char *)(DMARxDesc->Buffer1Addr);
+        
+        byteslefttocopy = byteslefttocopy - (ETH_RX_BUF_SIZE - bufferoffset);
+        payloadoffset = payloadoffset + (ETH_RX_BUF_SIZE - bufferoffset);
+        bufferoffset = 0;
+      }
+      /* Copy remaining data in pbuf */
+      memcpy( (u8_t*)((u8_t*)q->payload + payloadoffset), (u8_t*)((u8_t*)buffer + bufferoffset), byteslefttocopy);
+      bufferoffset = bufferoffset + byteslefttocopy;
+    }
+  }
+  
+  /* Release descriptors to DMA */
+  DMARxDesc =frame.descriptor;
 
-    return p;
+  /* Set Own bit in Rx descriptors: gives the buffers back to DMA */
+  for (i=0; i<DMA_RX_FRAME_infos->Seg_Count; i++)
+  {  
+    DMARxDesc->Status = ETH_DMARxDesc_OWN;
+    DMARxDesc = (ETH_DMADESCTypeDef *)(DMARxDesc->Buffer2NextDescAddr);
+  }
+  
+  /* Clear Segment_Count */
+  DMA_RX_FRAME_infos->Seg_Count =0;
+  
+  /* When Rx Buffer unavailable flag is set: clear it and resume reception */
+  if ((ETH->DMASR & ETH_DMASR_RBUS) != (u32)RESET)  
+  {
+    /* Clear RBUS ETHERNET DMA flag */
+    ETH->DMASR = ETH_DMASR_RBUS;
+    /* Resume DMA reception */
+    ETH->DMARPDR = 0;
+  }
+  return p;
 }
 
 /**
@@ -211,24 +310,24 @@ static struct pbuf * low_level_input(struct netif *netif)
  */
 err_t ethernetif_input(struct netif *netif)
 {
-    err_t err;
-    struct pbuf *p;
+  err_t err;
+  struct pbuf *p;
 
-    /* move received packet into a new pbuf */
-    p = low_level_input(netif);
+  /* move received packet into a new pbuf */
+  p = low_level_input(netif);
 
-    /* no packet could be read, silently ignore this */
-    if (p == NULL) return ERR_MEM;
+  /* no packet could be read, silently ignore this */
+  if (p == NULL) return ERR_MEM;
 
-    /* entry point to the LwIP stack */
-    err = netif->input(p, netif);
-    
-    if (err != ERR_OK){
-        LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
-        pbuf_free(p);
-        p = NULL;
-    }
-    return err;
+  /* entry point to the LwIP stack */
+  err = netif->input(p, netif);
+  
+  if (err != ERR_OK)
+  {
+    LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
+    pbuf_free(p);
+  }
+  return err;
 }
 
 /**
@@ -245,25 +344,24 @@ err_t ethernetif_input(struct netif *netif)
  */
 err_t ethernetif_init(struct netif *netif)
 {
-    LWIP_ASSERT("netif != NULL", (netif != NULL));
+  LWIP_ASSERT("netif != NULL", (netif != NULL));
   
 #if LWIP_NETIF_HOSTNAME
-    /* Initialize interface hostname */
-    netif->hostname = "Gigadevice.COM_lwip";
+  /* Initialize interface hostname */
+  netif->hostname = "lwip";
 #endif /* LWIP_NETIF_HOSTNAME */
 
-    netif->name[0] = IFNAME0;
-    netif->name[1] = IFNAME1;
-    /* We directly use etharp_output() here to save a function call.
-     * You can instead declare your own function an call etharp_output()
-     * from it if you have to do some checks before sending (e.g. if link
-     * is available...) */
-    netif->output = etharp_output;
-    netif->linkoutput = low_level_output;
+  netif->name[0] = IFNAME0;
+  netif->name[1] = IFNAME1;
+  /* We directly use etharp_output() here to save a function call.
+   * You can instead declare your own function an call etharp_output()
+   * from it if you have to do some checks before sending (e.g. if link
+   * is available...) */
+  netif->output = etharp_output;
+  netif->linkoutput = low_level_output;
 
-    /* initialize the hardware */
-    low_level_init(netif);
+  /* initialize the hardware */
+  low_level_init(netif);
 
-    return ERR_OK;
+  return ERR_OK;
 }
-
