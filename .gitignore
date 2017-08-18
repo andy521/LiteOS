@@ -24,3 +24,5 @@ projects/STM32F429I_WildFire_IAR/settings/
 */settings/
 */BuildLog.log
 */Application/
+server/node_modules
+mqtt_client/node_modules

@@ -1924,12 +1924,6 @@
       </file>
     </group>
     <group>
-      <name>devices</name>
-      <file>
-        <name>$PROJ_DIR$\..\..\platform\CS6X00\devices\KSZ8041.c</name>
-      </file>
-    </group>
-    <group>
       <name>example</name>
       <file>
         <name>$PROJ_DIR$\..\..\example\api\los_api_dynamic_mem.c</name>
@@ -2144,6 +2138,21 @@
     </group>
     <group>
       <name>platform/CS6X00</name>
+      <group>
+        <name>app</name>
+        <file>
+          <name>$PROJ_DIR$\..\..\platform\CS6X00\app\mqtt_client.c</name>
+        </file>
+      </group>
+      <group>
+        <name>devices</name>
+        <file>
+          <name>$PROJ_DIR$\..\..\platform\CS6X00\devices\KSZ8041.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\platform\CS6X00\devices\LM75A.c</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$\..\..\platform\CS6X00\los_bsp_adapter.c</name>
       </file>
@@ -2179,15 +2188,15 @@
       <name>user</name>
       <file>
         <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver\httpserver-netconn.c</name>
+        <excluded>
+          <configuration>Debug</configuration>
+        </excluded>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\user\main.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\mqtt\mqtt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\app\mqtt_client.c</name>
       </file>
     </group>
   </group>
