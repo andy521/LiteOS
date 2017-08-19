@@ -26,6 +26,39 @@ void LOS_LwipAppInit(void)
     //http_server_netconn_init();
 }
 
+static UINT32 g_uwethLoopTaskID;
+
+LITE_OS_SEC_TEXT VOID eth_loop(VOID)
+{
+    while(1)
+    {
+        /* check if any packet received */
+        if (ETH_CheckFrameReceived())
+        {
+            /* process received ethernet packet */
+            lwip_pkt_handle();
+        }
+    }
+}
+void eth_init(void)
+{
+    UINT32 uwRet;
+    TSK_INIT_PARAM_S stTaskInitParam;
+
+    (VOID)memset((void *)(&stTaskInitParam), 0, sizeof(TSK_INIT_PARAM_S));
+    stTaskInitParam.pfnTaskEntry = (TSK_ENTRY_FUNC)eth_loop;
+    stTaskInitParam.uwStackSize = 512;
+    stTaskInitParam.pcName = "ethLoop";
+    stTaskInitParam.usTaskPrio = 10;
+    uwRet = LOS_TaskCreate(&g_uwethLoopTaskID, &stTaskInitParam);
+
+    if (uwRet != LOS_OK)
+    {
+        return;
+    }
+    return;
+}
+
 void LOS_EvbLwipInit(void)
 {
     ip_addr_t ipaddr;
@@ -78,8 +111,17 @@ void LOS_EvbLwipInit(void)
     /* when the netif is fully configured this function must be called */
     netif_set_up(&netif);
     
+    eth_init();
     LOS_LwipAppInit();
 }
+
+//void ETH_IRQHandler(void)
+//{
+//    if(ETH_CheckFrameReceived)
+//    {
+//        lwip_pkt_handle();
+//    }
+//}
 
 /*****************************************************************************
  Function    : lwip_pkt_handle

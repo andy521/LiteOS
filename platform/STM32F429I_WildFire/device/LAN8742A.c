@@ -30,7 +30,7 @@
 #include "stm32f429_eth.h"
 #include "LAN8742A.h"
 #include "lwip/netif.h"
-//#include "netconf.h"
+#include "netconf.h"
 #include "lwip/dhcp.h"
 #include "lwip/mem.h"
 #include "lwip/memp.h"

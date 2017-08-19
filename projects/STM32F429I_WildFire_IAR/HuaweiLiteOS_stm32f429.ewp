@@ -355,6 +355,7 @@
                     <state>$PROJ_DIR$\..\..\components\lwip-2.0.2\include\arch</state>
                     <state>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver</state>
                     <state>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\shell</state>
+                    <state>$PROJ_DIR$\..\..\components\lwip-2.0.2\include\lwip\apps</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2071,15 +2072,6 @@
             </file>
         </group>
         <group>
-            <name>device</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\device\LAN8742A.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\device\stm32f429_eth.c</name>
-            </file>
-        </group>
-        <group>
             <name>example</name>
             <file>
                 <name>$PROJ_DIR$\..\..\example\api\los_api_dynamic_mem.c</name>
@@ -2425,6 +2417,24 @@
             <name>platform</name>
             <group>
                 <name>stm32f429i</name>
+                <group>
+                    <name>app</name>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\mqtt\mqtt.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\app\mqtt_client.c</name>
+                    </file>
+                </group>
+                <group>
+                    <name>device</name>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\device\LAN8742A.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\device\stm32f429_eth.c</name>
+                    </file>
+                </group>
                 <file>
                     <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\los_bsp_adapter.c</name>
                 </file>

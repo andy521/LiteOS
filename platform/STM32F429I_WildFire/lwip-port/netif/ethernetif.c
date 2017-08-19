@@ -42,7 +42,7 @@
 #include "netif/etharp.h"
 #include "ethernetif.h"
 #include "stm32f429_eth.h"
-//#include "netconf.h"
+#include "netconf.h"
 #include <string.h>
 
 /* Network interface name */
