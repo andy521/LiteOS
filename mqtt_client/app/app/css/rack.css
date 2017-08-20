@@ -1,0 +1,25 @@
+/* rack route page */
+#rackTable{
+  min-width:655px;
+}
+#rackTable tr {
+  height: 40px;
+   }
+
+#rackTable td {
+  vertical-align: middle;
+  }
+
+
+#rackTable td span {
+ 
+  display: inline-block; }
+
+#rackTable td a {
+  display: inline-block; }
+
+#rackTable select.unit-select {
+  display: inline-block;}
+
+
+/*# sourceMappingURL=rack.css.map */

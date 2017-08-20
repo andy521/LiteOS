@@ -1,0 +1,47 @@
+<style type="text/css">
+.modal-dialog 
+{
+    top: 50%;
+    margin-top:-225px;
+    width:700px;
+    height:450px;
+    font-size: 15px;
+}
+</style>
+<div class='angular-modal'>
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" ng-click="$ctrl.cancel()">×</a> 
+        <h3 class="modal-title" id="modal-title">Add New Chain</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div>
+            <table class="table  table-bordered rackTable" id="addNewChainTable">
+            <tr>
+                <td>Chain Name</td>
+                <td><input ng-model="$ctrl.chainName"></input></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Main Contact Name</td>
+                <td><input></input></td>
+                <td><span>Phone:</span><input></input></td>
+            </tr>
+            <tr>
+                <td style="background:#ffffff"></td>
+                <td></td>
+                <td><span>Email:</span><input></input></td>
+            </tr>
+             <tr>
+                <td><span>Total Number of Stores</span></td>
+                <td><input /></td>
+                <td></td>
+            </tr>
+            
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-button" ng-click="$ctrl.cancel()">Cancel</a>
+        <a class="modal-button" ng-click="$ctrl.ok()">OK</a>
+    </div>
+</div>

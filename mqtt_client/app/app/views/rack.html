@@ -1,0 +1,154 @@
+
+            <div class="content-search">
+						<div class="input-box">
+								<input type="text" /> 
+                                <a><img src="app/img/search.png"></img></a>
+						</div>
+            </div>
+            
+                <div class="box row">
+                        <div class="box-header col-md-12">
+                                <h4>RackB</h4>
+                                <button class="edit">Edit</button>
+                                <div class="pull-right title">
+                                    <a href=""><img src="app/img/todo.png"></img></a>
+                                    <a href=""><img src="app/img/output.png"></img></a>
+                                    <a href=""><img src="app/img/print.png"></img></a>
+                                </div>
+                        </div>
+                        <div class="box-content col-md-6">
+                                    <table id="rackTable" class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Refrigerant Type</td>
+                                                <td class="my-cell-select"><select><option>R507</option></select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Inside Temp</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/> <a><img src="app/img/edit.png"/></a> <select class="unit-select"><option>C</option></select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Outside Temp</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/> <a><img src="app/img/edit.png"/></a> <select class="unit-select"><option>C</option></select> </td> 
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Inside Humidity</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/> <a><img src="app/img/edit.png"/></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Outside Humidity</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/> <a><img src="app/img/edit.png"/></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td>Compressor Power</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/> <a><img src="app/img/edit.png"/></a><select class="unit-select"><option>KW</option></select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>7</td>
+                                                <td>Condensor Power</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/><a><img src="app/img/edit.png"/></a><select class="unit-select"><option>W</option></select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>8</td>
+                                                <td>Compressor Amps</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/> <a><img src="app/img/edit.png"/></a> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>9</td>
+                                                <td>Discharge Pressures</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/> <a><img src="app/img/edit.png"/></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>10</td>
+                                                <td>Discharge Temp</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/><a><img src="app/img/edit.png"/></a> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>11</td>
+                                                <td>Target Discharge Pressures</td>
+                                                <td class="my-cell-mapped"><input type="text" placeholder="Mapped"/><a><img src="app/img/edit.png"/></a> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>12</td>
+                                                <td>Discharge Temperature Measurement Loaction</td>
+                                                <td class="my-cell-select"> <select><option>Header</option></select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>13</td>
+                                                <td>Suction Groups</td>
+                                                <td class="my-cell-select"><select><option>2</option></select></td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="2"></td>
+                                                <td>Suction Group 1 Name</td>
+                                                <td>SG1</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Suction Group 2 Name</td>
+                                                <td>SG2</td>
+                                            </tr>
+                                            <tr>
+                                                <td>14</td>
+                                                <td>Heat Reclaim</td>
+                                                <td class="my-cell-select"><select><option>2</option></select> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>15</td>
+                                                <td>Liquid Receiver</td>
+                                                <td class="my-cell-select"><select><option>2</option></select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>16</td>
+                                                <td>Subcooler</td>
+                                                <td class="my-cell-select"><select><option>2</option></select></td>
+                                            </tr>
+                                            <tr class="no-index">
+                                                <td></td>
+                                                <td>Checked OK?</td>
+                                                <td><input type="checkbox" /></td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                        </div>
+                </div>
+            
+            
+                <div class="box row">
+                        <div class="box-header  col-md-8">
+                                <h4>System Log</h4>
+                        </div>
+                        <div class="box-content  col-md-8">
+                            <table class="table table-bordered table-hover" id="logTable" >
+                                <thead>
+                                    <th>#</th>
+                                    <th>Date/Time</th>
+                                    <th>User</th>
+                                    <th>Event/Action</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>99</td>
+                                        <td>05/12/2017</td>
+                                        <td>John Doe</td>
+                                        <td>changed Row2 Inside Temp To 'xyz' From 'abc'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>99</td>
+                                        <td>05/12/2017</td>
+                                        <td>John Doe</td>
+                                        <td>changed Row2 Inside Temp To 'xyz' From 'abc'</td>
+                                    </tr>
+                                </tbody>
+                        </table>
+                        </div>
+                </div>
+           
+            

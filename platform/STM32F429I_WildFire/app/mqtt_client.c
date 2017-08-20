@@ -17,7 +17,23 @@ http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html
 #include "los_task.ph"
 #include "los_config.h"
 
-#include "LM75A.h"
+typedef struct
+{
+    uint8_t name[32];
+    uint64_t uptime;
+    //LOS_TickCountGet
+    uint32_t priqueue_size;//LOS_PriqueueTotalSize
+    uint32_t cycle_pre_tick;//LOS_CyclePerTickGet
+    uint32_t current_task; //LOS_CurTaskIDGet
+}mqtt_device_t;
+
+static mqtt_device_t mqtt_device = {
+    .name = "xiaxiaowen's IOT device",
+    .uptime = 0,
+    .priqueue_size = 0,
+    .cycle_pre_tick = 160000,
+    .current_task = 0x00000000UL
+};
 
 ip_addr_t mqttServerIpAddr;
 
@@ -53,10 +69,10 @@ void example_do_connect(mqtt_client_t *client)
     memset(&ci, 0, sizeof(ci));
     
     /* Minimal amount of information required is client identifier, so set it here */ 
-    ci.client_id = "CS6X00-01";
+    ci.client_id = "xiaxiaowen_01";
     
     // MQTT服务器地址为：59.110.142.105端口号为：1883
-    IP4_ADDR(&mqttServerIpAddr, 192, 168, 0, 11);//配置 MQTT 服务器地址
+    IP4_ADDR(&mqttServerIpAddr, 192, 168, 1, 5);//配置 MQTT 服务器地址
     
     /* Initiate client and connect to server, if this fails immediately an error code is returned
     otherwise mqtt_connection_cb will be called with connection result after attempting 
@@ -138,7 +154,7 @@ static void mqtt_incoming_publish_cb(void *arg, const char *topic, u32_t tot_len
     if(strcmp(topic, "time") == 0) 
     {
         inpub_id = 0;
-    } 
+    }
     else if(topic[0] == 'A')        
     {
         /* All topics starting with 'A' might be handled at the same way */
@@ -219,10 +235,15 @@ void example_publish(mqtt_client_t *client, void *arg)
     
     //=0 的意思应该是不保留有效负载（有效数据）
     u8_t retain = 0; /* No don't retain such crappy payload... */
-    temp = LM75A_ReadTemperature();
-    printf("temp:%d.%d\r\n", temp/100, temp%100);
+    //temp = LM75A_ReadTemperature();
+    //printf("temp:%d.%d\r\n", temp/100, temp%100);
     
-    err = mqtt_publish(client, "temperature", &temp, sizeof(temp), qos, retain, mqtt_pub_request_cb, arg);
+    mqtt_device.uptime          = LOS_TickCountGet();
+    mqtt_device.priqueue_size   = LOS_PriqueueTotalSize();
+    mqtt_device.cycle_pre_tick  = LOS_CyclePerTickGet();
+    mqtt_device.current_task    = LOS_CurTaskIDGet();
+    
+    err = mqtt_publish(client, "device", &mqtt_device, sizeof(mqtt_device), qos, retain, mqtt_pub_request_cb, arg);
     
     if(err != ERR_OK)
     {
@@ -268,7 +289,7 @@ void mqtt_client_init(void)
     (VOID)memset((void *)(&stTaskInitParam), 0, sizeof(TSK_INIT_PARAM_S));
     stTaskInitParam.pfnTaskEntry = (TSK_ENTRY_FUNC)mqtt_client_create;
     stTaskInitParam.uwStackSize = 512;
-    stTaskInitParam.pcName = "BoardDemo";
+    stTaskInitParam.pcName = "mqttClient";
     stTaskInitParam.usTaskPrio = 10;
     uwRet = LOS_TaskCreate(&g_uwmqttClientTaskID, &stTaskInitParam);
     

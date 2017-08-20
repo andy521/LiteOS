@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>MQTT Test</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <constant name="struts.action.excludePattern" value="/log/tail,/log/view"></constant> 
 </head>
 <body ng-controller="indexCtrl">
 
@@ -20,7 +20,7 @@
     ]);
 
     app.config(['MQTTProvider',function(MQTTProvider){
-        MQTTProvider.setHref('ws://cv.endaosi.com:18585');
+        MQTTProvider.setHref('ws://test.mosquitto.org');
     }]);
 
     app.controller('indexCtrl', ['$scope', 'MQTTService', function ($scope, MQTTService) {

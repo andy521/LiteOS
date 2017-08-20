@@ -1,0 +1,77 @@
+/* modal css */
+.angular-modal {
+  font-size: 15px; }
+
+.angular-modal .modal-header {
+  border-bottom: none; }
+
+.angular-modal .modal-footer {
+  border-top: none; }
+
+.angular-modal .modal-title {
+  font-size: 15px;
+  color: #000000;
+  font-weight: 700; }
+
+.angular-modal .modal-button {
+  height: 37px;
+  width: 130px;
+  line-height: 37px;
+  border: 1px solid #a8aaac;
+  background-color: #ffffff;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  display: inline-block !important;
+  color: #646464 !important;
+  text-shadow: none !important;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none; }
+
+.angular-modal .modal-button:hover {
+  border-color: #a8aaac;
+  background: #f2f2f2; }
+
+.angular-modal .modal-header {
+  padding: 37px; }
+
+.angular-modal .modal-body {
+  padding: 0 37px; }
+
+.angular-modal .modal-footer {
+  padding: 56px 37px 18px 37px; }
+
+#addNewStoreModal .modal-body div {
+  border: 1px solid #a8aaac; }
+
+#addNewStoreModal .left {
+  display: inline-block;
+  height: 55px;
+  line-height: 55px;
+  width: 50%;
+  padding: 0 20px;
+  border-right: 1px solid #a8aaac; }
+
+#addNewStoreModal .right {
+  height: 55px;
+  border: none; }
+
+/*addNewChainTable*/
+#addNewChainTable input {
+  height: 50px;
+  border: none; }
+
+#addNewChainTable tr td {
+  vertical-align: middle;
+  height: 50px;
+  padding: 0px; }
+
+#addNewChainTable tr td span {
+  padding: 5px; }
+
+#addNewChainTable tr td:nth-child(1) {
+  padding: 5px; }
+
+/*# sourceMappingURL=modal.css.map */

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "express": "^4.15.4",
+    "mosca": "^2.5.2",
+    "mqtt-connection": "^3.1.0"
+  }
+}

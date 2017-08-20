@@ -1,10 +1,48 @@
-var mosca = require('mosca')
+var mosca = require('mosca');
+var express = require('express');
+var https = require('https');
+var fs = require('fs');
+
+var app = express();
+
+var name;
+/**
+ * CORS support.
+ */
+app.all('*', function (req, res, next) {
+    //console.log("fdsafdsa")
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET');
+    res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+    // res.set('Access-Control-Allow-Max-Age', 3600);
+    if ('OPTIONS' == req.method) return res.send(200);
+    next();
+});
+
+app.get('/iot/temperature', function(req, res){
+    console.log(req);
+    res.send(name);
+});
+
+/* 启动https */
+var options = {
+    key: fs.readFileSync('./cert/chyingp-key.pem'),
+    cert: fs.readFileSync('./cert/chyingp-cert.pem')
+};
+
+https.createServer(options, app).listen(443);
+
 var settings = {
     port: 1883,
-    host: '192.168.0.11'
+    host: '192.168.1.5'
 };
 var server = new mosca.Server(settings);
 server.on('ready', setup);
+
+// ArrayBuffer转为字符串，参数为ArrayBuffer对象
+function ab2str(buf) {
+    return String.fromCharCode.apply(null, new Uint8Array(buf));
+}
 
 function setup() {
     console.log('Mosca server is up & running');
@@ -27,12 +65,14 @@ server.on('clientDisconnected', function(client) {
 
 /* 接收到新的消息 */
 server.on('published', function(packet, client) {
-    //console.log(packet.payload.topic);
+    console.log(packet.payload);
     //console.log(packet.payload.qos);
-
-    var temp = packet.payload[0] + packet.payload[1] * 256;
+    name = ab2str(packet.payload.slice(0, 31));
+    console.log(packet.payload.length);
+    console.log(name);
+    //var temp = packet.payload[0] + packet.payload[1] * 256;
     //console.log(client);
-    console.log(' Published: ' + temp);
+    console.log(' Published: ' + name);
 });
 
 /* 订阅主题 */

@@ -1,0 +1,25 @@
+<style type="text/css">
+.modal-dialog 
+{
+    top: 50%;
+    margin-top: -130px;
+    width: 550px;
+    height: 260px;
+}
+</style>
+<div class='angular-modal' id="addNewStoreModal">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" ng-click="$ctrl.cancel()">×</a> 
+        <h3 class="modal-title" id="modal-title">Add New Store</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <span class="left">Store Name</span>
+            <input id="ipStoreName" class="right" ng-model="$ctrl.chainName"></input>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-button" ng-click="$ctrl.cancel()">Cancel</a>
+        <a class="modal-button" ng-click="$ctrl.ok()">OK</a>
+    </div>
+</div>

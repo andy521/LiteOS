@@ -1,0 +1,96 @@
+
+/* delete origin css */
+body {
+  background-color: #ffffff !important;
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 0px !important;
+  margin: 0px !important;
+  font-size: 12px;
+  direction: ltr; }
+
+* {
+  padding: 0px;
+  margin: 0px; }
+
+a {
+  text-shadow: none !important;
+  color: #0d638f; }
+
+a, a:focus, a:hover, a:active {
+  outline: 0; }
+
+select {
+  border: none; }
+
+/* content css */
+
+.page-content {
+  margin-left: 225px;
+  margin-top:55px;
+  padding: 0px;
+  background-color: #fff; 
+  overflow: auto;}
+
+.row{
+  padding: 0px;
+  margin: 0px; }
+/*content search */
+.content-search input {
+  border: none;
+  width: 90%;
+  height: 100%;
+  outline: 0; }
+
+.content-search .input-box {
+  border-bottom: 1px solid #7d7d7d !important;
+  padding-left: 10px;
+  height: 40px; }
+
+.content-search a {
+  display: inline-block;
+  float: right;
+  margin-top: 10px; }
+
+.box {
+  padding: 3%; }
+
+.box .box-header, .box .box-content {
+  margin: 15px 0; }
+
+.box .box-header h4 {
+  margin: 0;
+  padding: 0;
+  display: inline-block; }
+
+.box .box-header label {
+  margin-left: 25%;
+  color: #bbbdbf; }
+
+button.edit {
+  padding: 2px 15px;
+  border-radius: 10px;
+  border-style: solid;
+  outline: none; }
+ 
+ /*table的样式*/
+ .table input,.table select{
+   border:none;
+   outline:none;
+ }
+ .table td.my-cell-select select{
+  width:200px;
+ }
+ .table td.my-cell-mapped select{
+   width:42px;
+ }
+.table> tbody > tr:nth-of-type(odd) > td:nth-child(1), .table> tbody > tr:nth-of-type(odd) > td:nth-child(2) {
+  background: #f2f2f2; }
+
+.table> tbody > tr:nth-of-type(even) > td:nth-child(1), .table> tbody > tr:nth-of-type(even) > td:nth-child(2) {
+  background: #d9d4d4; }
+
+td[rowspan] {
+  background: #ffffff !important; }
+
+

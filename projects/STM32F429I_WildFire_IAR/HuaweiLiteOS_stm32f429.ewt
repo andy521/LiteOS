@@ -2679,10 +2679,16 @@
                 <group>
                     <name>app</name>
                     <file>
+                        <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\httpserver\httpserver-netconn.c</name>
+                    </file>
+                    <file>
                         <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\mqtt\mqtt.c</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\..\..\platform\STM32F429I_WildFire\app\mqtt_client.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\components\lwip-2.0.2\apps\shell\shell.c</name>
                     </file>
                 </group>
                 <group>

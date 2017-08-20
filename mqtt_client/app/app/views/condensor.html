@@ -1,0 +1,229 @@
+
+            <div class="content-search">
+						<div class="input-box">
+								<input type="text" /> 
+                                <a><img src="app/img/search.png"></img></a>
+						</div>
+            </div>
+            <div class="box row">
+                    <div class="box-header col-md-12">
+                            <h4>Condensor</h4>
+                            <button class="edit">Edit</button>
+                            <label>Compressors Name can be Editable</label>
+                            <div class="pull-right title">
+                                <a href=""><img src="app/img/todo.png"></img></a>
+                                <a href=""><img src="app/img/output.png"></img></a>
+                                <a href=""><img src="app/img/print.png"></img></a>
+                            </div>
+                    </div>
+                    <div class="box-content col-md-6">
+                         <table class="table table-bordered table-hover" id="rackTable" >
+                                <tr>
+                                    <td>1</td>
+                                    <td>Condensor</td>
+                                    <td>Condensor1</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Rated Capacity</td>
+                                    <td>
+                                       <input type="text"/> <select><option>C</option></select>
+                                    </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Rated Temp Difference</td>
+                                    <td>
+                                       <input type="text"/><select><option>C</option></select>
+                                    </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Configuration</td>
+                                    <td>
+                                        <select><option>split</option></select>  
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Control Methodology</td>
+                                    <td>
+                                        <select><option>Floating</option></select> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Target</td>
+                                    <td>
+                                       <input type="text"/>
+                                       <select><option>psi</option></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Allowable Range/Float</td>
+                                    <td>
+                                       <input type="number"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Lower Range</td>
+                                    <td>
+                                         <input type="number"/>180
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Upper Range</td>
+                                    <td>
+                                         <input type="number"/>170
+                                         <select>
+                                            <option>psi</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Inlet Pressure</td>
+                                    <td>
+                                         <input type="text" placeholder="Mapped"/>
+                                         <a><img src="app/img/edit.png" alt=""></a>
+                                         <select>
+                                            <option>psi</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td>Outlet Pressure</td>
+                                    <td>
+                                         <input type="text" placeholder="Mapped"/>
+                                         <a><img src="app/img/edit.png" alt=""></a>
+                                         <select>
+                                            <option>psi</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="5">12</td>
+                                    <td>Number of Splits</td>
+                                    <td>
+                                         <select>
+                                            <option>2</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                               
+                                <tr>
+                                    <td>Splits 1 Inlet Temp</td>
+                                    <td>
+                                        <input type="text" placeholder="Mapped"/>
+                                        <a><img src="app/img/edit.png" alt=""></a>
+                                        <select>
+                                                <option>C</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Splits 1 Outlet Temp</td>
+                                    <td>
+                                        <input type="text" placeholder="Mapped"/>
+                                        <a><img src="app/img/edit.png" alt=""></a>
+                                        <select>
+                                                <option>C</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                               <tr>
+                                    <td>Splits 2 Inlet Temp</td>
+                                    <td>
+                                        <input type="text" placeholder="Mapped"/>
+                                        <a><img src="app/img/edit.png" alt=""></a>
+                                        <select>
+                                                <option>C</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Splits 2 Outlet Temp</td>
+                                    <td>
+                                        <input type="text" placeholder="Mapped"/>
+                                        <a><img src="app/img/edit.png" alt=""></a>
+                                        <select>
+                                                <option>C</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>13</td>
+                                    <td>Number of Fans</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>14</td>
+                                    <td>Rated Fan Power Per Fan</td>
+                                    <td><input type="number"/><select><option>KW</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td>15</td>
+                                    <td>Max Fan Power Per Fan</td>
+                                    <td><input type="number"/><select><option>KW</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td>16</td>
+                                    <td>Fan Control</td>
+                                    <td><select><option>Paired</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3">17</td>
+                                    <td>No.of Fans Per Pair</td>
+                                    <td><select><option>2</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td>Fan or Pair 1 Control Signal</td>
+                                    <td><select><option>2</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td>Checked OK?</td>
+                                    <td><input type="checkbox"/><span>05/26/2017 1:22 PM</span><img src='app/img/JD.png'></img></td>
+                                </tr>
+                        </table>    
+                    </div>
+             </div>
+            
+            <div class="box row">
+                    <div class="box-header col-md-12">
+                            <h4>System Log</h4>
+                    </div>
+                    <div class="box-content col-md-12">
+                            <table class="table table-bordered table-hover" id="logTable" >
+                            <thead>
+                                <th>#</th>
+                                <th>Date/Time</th>
+                                <th>User</th>
+                                <th>Event/Action</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>99</td>
+                                    <td>05/12/2017</td>
+                                    <td>John Doe</td>
+                                    <td>changed Row2 Inside Temp To 'xyz' From 'abc'</td>
+                                </tr>
+                                <tr>
+                                    <td>99</td>
+                                    <td>05/12/2017</td>
+                                    <td>John Doe</td>
+                                    <td>changed Row2 Inside Temp To 'xyz' From 'abc'</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+            
+
+
+        <!-- END PAGE -->
