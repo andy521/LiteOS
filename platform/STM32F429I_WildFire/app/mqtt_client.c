@@ -28,7 +28,7 @@ typedef struct
 }mqtt_device_t;
 
 static mqtt_device_t mqtt_device = {
-    .name = "xiaxiaowen's IOT device",
+    .name = "xiaxiaowen's stm32f429",
     .uptime = 0,
     .priqueue_size = 0,
     .cycle_pre_tick = 160000,
