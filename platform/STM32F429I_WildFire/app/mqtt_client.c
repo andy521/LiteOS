@@ -27,13 +27,24 @@ typedef struct
     uint32_t current_task; //LOS_CurTaskIDGet
 }mqtt_device_t;
 
+typedef struct
+{
+    uint32_t temp;      /* temperature sensor */
+    uint32_t acc;       /* acceleration sensor */
+    uint32_t magc;      /* magnetic sensor */
+    uint32_t light;     /* light sensor */
+    uint32_t pressure;  /* pressure sensor */
+    uint32_t humidity;  /* humidity sensor */
+}mqtt_sensor_t;
+
 static mqtt_device_t mqtt_device = {
-    .name = "xiaxiaowen's IOT device",
+    .name = "xiaxiaowen's stm32f429",
     .uptime = 0,
     .priqueue_size = 0,
     .cycle_pre_tick = 160000,
     .current_task = 0x00000000UL
 };
+static mqtt_sensor_t mqtt_sensor = {0};
 
 ip_addr_t mqttServerIpAddr;
 
