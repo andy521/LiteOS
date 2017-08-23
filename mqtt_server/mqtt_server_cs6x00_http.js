@@ -1,6 +1,6 @@
 var mosca = require('mosca');
 var express = require('express');
-var https = require('https');
+var https = require('http');
 var fs = require('fs');
 
 var app = express();
@@ -30,7 +30,7 @@ var options = {
     cert: fs.readFileSync('./cert/chyingp-cert.pem')
 };
 
-https.createServer(options, app).listen(443);
+https.createServer(app).listen(80);
 
 var settings = {
     port: 1883,
@@ -68,7 +68,7 @@ server.on('published', function(packet, client) {
     console.log(packet.payload);
     //console.log(packet.payload.qos);
     name = ab2str(packet.payload.slice(0, 31));
-    console.log(packet.payload.length);
+    //console.log(packet.payload.length);
     console.log(name);
     //var temp = packet.payload[0] + packet.payload[1] * 256;
     //console.log(client);

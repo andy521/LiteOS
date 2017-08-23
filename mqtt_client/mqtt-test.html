@@ -1,19 +1,22 @@
 <html>
-  <head>
+
+<head>
     <script src="asset\mqtt\mqtt.js"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <script>
-      var client = mqtt.connect('ws://192.168.1.5:3000');
+        var client = mqtt.connect('ws://192.168.0.11:3000');
 
-      client.subscribe("iot/temperature");
+        client.subscribe("iot/temperature");
 
-      client.on("message", function(topic, payload) {
-          console.log(topic);
-          console.log(payload);
-      });
+        client.on("message", function(topic, payload) {
+            console.log(topic);
+            console.log(payload);
+        });
 
-      client.publish("iot/temperature", "hello world!");
+        client.publish("iot/temperature", "hello world!");
     </script>
-  </body>
+</body>
+
 </html>

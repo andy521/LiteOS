@@ -46,7 +46,7 @@ void mqtt_sub_request_cb(void *arg, err_t result);
 
 //1.1: Provide storage
 
-//Static allocation: //ÏÂÃæÕâÁ½¾ä×ªÒÆµ½ MAIN.c ÖĞ
+//Static allocation: //ä¸‹é¢è¿™ä¸¤å¥è½¬ç§»åˆ° MAIN.c ä¸­
 //  mqtt_client_t static_client;
 
 //  example_do_connect(&static_client);
@@ -71,15 +71,15 @@ void example_do_connect(mqtt_client_t *client)
     /* Minimal amount of information required is client identifier, so set it here */ 
     ci.client_id = "xiaxiaowen_01";
     
-    // MQTT·şÎñÆ÷µØÖ·Îª£º59.110.142.105¶Ë¿ÚºÅÎª£º1883
-    IP4_ADDR(&mqttServerIpAddr, 192, 168, 1, 5);//ÅäÖÃ MQTT ·şÎñÆ÷µØÖ·
+    // MQTTæœåŠ¡å™¨åœ°å€ä¸ºï¼š59.110.142.105ç«¯å£å·ä¸ºï¼š1883
+    IP4_ADDR(&mqttServerIpAddr, 192, 168, 1, 5);//é…ç½® MQTT æœåŠ¡å™¨åœ°å€
     
     /* Initiate client and connect to server, if this fails immediately an error code is returned
     otherwise mqtt_connection_cb will be called with connection result after attempting 
     to establish a connection with the server. 
     For now MQTT version 3.1.1 is always used */
     
-    //MQTT ·şÎñÆ÷½øĞĞÁ¬½Ó ,²¢×¢²á ¡°Á¬½Ó½á¹û´¦Àí¡±µÄ»Øµ÷º¯Êı£¬2017Äê4ÔÂ12ÈÕ09:00:12
+    //MQTT æœåŠ¡å™¨è¿›è¡Œè¿æ¥ ,å¹¶æ³¨å†Œ â€œè¿æ¥ç»“æœå¤„ç†â€çš„å›è°ƒå‡½æ•°ï¼Œ2017å¹´4æœˆ12æ—¥09:00:12
     
     err = mqtt_client_connect(client, &mqttServerIpAddr, 1883, mqtt_connection_cb, 0, &ci);
     
@@ -94,7 +94,7 @@ void example_do_connect(mqtt_client_t *client)
 
 //-----------------------------------------------------------------
 //2. Implementing the connection status callback
-//Ö´ĞĞÁ¬½Ó×´Ì¬ µÄ »Øµ÷º¯Êı
+//æ‰§è¡Œè¿æ¥çŠ¶æ€ çš„ å›è°ƒå‡½æ•°
 static void mqtt_connection_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_t status)
 {
     err_t err;
@@ -103,7 +103,7 @@ static void mqtt_connection_cb(mqtt_client_t *client, void *arg, mqtt_connection
         printf("mqtt_connection_cb: Successfully connected\n");
         
         /* Setup callback for incoming publish requests */
-        //×¢²á ÏûÏ¢ÍÆËÍ »Øµ÷º¯Êı ÒÔ¼°ÏûÏ¢Êı¾İµ½À´µÄ´¦Àíº¯Êı
+        //æ³¨å†Œ æ¶ˆæ¯æ¨é€ å›è°ƒå‡½æ•° ä»¥åŠæ¶ˆæ¯æ•°æ®åˆ°æ¥çš„å¤„ç†å‡½æ•°
         mqtt_set_inpub_callback(client, mqtt_incoming_publish_cb, mqtt_incoming_data_cb, arg);
         
         /* Subscribe to a topic named "subtopic" with QoS level 2, call mqtt_sub_request_cb with result */ 
@@ -140,13 +140,13 @@ If RAM and CPU budget allows it, the easiest implementation might be to just tak
 the topic string and use it in mqtt_incoming_data_cb
 */
 
-//ÕâÁ½¸öº¯Êı Ò»¸ö ´¦Àí ÏûÏ¢Í· Ò»¸ö ´¦Àí ¾ßÌåµÄ Êı¾İ
+//è¿™ä¸¤ä¸ªå‡½æ•° ä¸€ä¸ª å¤„ç† æ¶ˆæ¯å¤´ ä¸€ä¸ª å¤„ç† å…·ä½“çš„ æ•°æ®
 
 static int inpub_id;
 static void mqtt_incoming_publish_cb(void *arg, const char *topic, u32_t tot_len)
 {
     
-    //ÏûÏ¢À´ÁËÖ®ºó£¬ÏÈ½øÈëÕâÀïÓÃÓÚÅĞ¶Ï ÊÇÊ²Ã´Ö÷Ìâ µÄ£¬2017Äê4ÔÂ20ÈÕ09:25:51
+    //æ¶ˆæ¯æ¥äº†ä¹‹åï¼Œå…ˆè¿›å…¥è¿™é‡Œç”¨äºåˆ¤æ–­ æ˜¯ä»€ä¹ˆä¸»é¢˜ çš„ï¼Œ2017å¹´4æœˆ20æ—¥09:25:51
     
     printf("Incoming publish at topic \" %s \" with total length %u\r\n", topic, (unsigned int)tot_len);
     
@@ -169,13 +169,13 @@ static void mqtt_incoming_publish_cb(void *arg, const char *topic, u32_t tot_len
 
 static void mqtt_incoming_data_cb(void *arg, const u8_t *data, u16_t len, u8_t flags)
 {
-    //ÏûÏ¢À´ÁËÖ®ºóÏÈÅĞ¶ÏÖ÷Ìâ ÉÏÃæÄÇ¸öº¯Êı£¬È»ºóÔÚÕâÀïÊÇ¸ù¾İ²»Í¬µÄÖ÷Ìâ£¬½øĞĞ²»Í¬µÄ´¦Àí
+    //æ¶ˆæ¯æ¥äº†ä¹‹åå…ˆåˆ¤æ–­ä¸»é¢˜ ä¸Šé¢é‚£ä¸ªå‡½æ•°ï¼Œç„¶ååœ¨è¿™é‡Œæ˜¯æ ¹æ®ä¸åŒçš„ä¸»é¢˜ï¼Œè¿›è¡Œä¸åŒçš„å¤„ç†
     
     uint8_t tempBuff[20]={0};
     
     uint8_t i;
     
-    //Êı¾İ¸´ÖÆµ½µ½»º³åÇø£¬²¢¼Ó  ×Ö·û¡®0¡¯½áÎ²£¬ÒòÎª ·¢ËÍ¹¤¾ßÖ»ÄÜ·¢ËÍ ×Ö·û ²»ÄÜ·¢ËÍ×Ö·û´®£¬2017Äê4ÔÂ20ÈÕ09:24:43
+    //æ•°æ®å¤åˆ¶åˆ°åˆ°ç¼“å†²åŒºï¼Œå¹¶åŠ   å­—ç¬¦â€˜0â€™ç»“å°¾ï¼Œå› ä¸º å‘é€å·¥å…·åªèƒ½å‘é€ å­—ç¬¦ ä¸èƒ½å‘é€å­—ç¬¦ä¸²ï¼Œ2017å¹´4æœˆ20æ—¥09:24:43
     for(i=0;i<len;i++)
     {
         tempBuff[i]=data[i];
@@ -217,23 +217,23 @@ static void mqtt_incoming_data_cb(void *arg, const u8_t *data, u16_t len, u8_t f
 //-----------------------------------------------------------------
 //4. Using outgoing publish
 
-//Ê¹ÓÃ ÏòÍâÍÆËÍÏûÏ¢
-//MQTT´«ÊäµÄÏûÏ¢·ÖÎª£ºÖ÷Ìâ£¨Topic£©ºÍ¸ºÔØ£¨payload£©Á½²¿·Ö
+//ä½¿ç”¨ å‘å¤–æ¨é€æ¶ˆæ¯
+//MQTTä¼ è¾“çš„æ¶ˆæ¯åˆ†ä¸ºï¼šä¸»é¢˜ï¼ˆTopicï¼‰å’Œè´Ÿè½½ï¼ˆpayloadï¼‰ä¸¤éƒ¨åˆ†
 
 void example_publish(mqtt_client_t *client, void *arg)
 {
     
     static uint16_t temp = 0;
-    //const char *pub_payload= "Hello,MQTT!\r\n";//ÍÆËÍµÄÓĞĞ§Êı¾İ(¸ºÔØ)
+    //const char *pub_payload= "Hello,MQTT!\r\n";//æ¨é€çš„æœ‰æ•ˆæ•°æ®(è´Ÿè½½)
     err_t err;
     /*
-    *    ×î¶àÒ»´Î£¬ÕâÒ»¼¶±ğ»á·¢ÉúÏûÏ¢¶ªÊ§»òÖØ¸´£¬ÏûÏ¢·¢²¼ÒÀÀµÓÚµ×²ãTCP/IPÍøÂç¡£¼´£º<=1
-    *    ÖÁ¶àÒ»´Î£¬ÕâÒ»¼¶±ğ»áÈ·±£ÏûÏ¢µ½´ï£¬µ«ÏûÏ¢¿ÉÄÜ»áÖØ¸´¡£¼´£º>=1
-    *    Ö»ÓĞÒ»´Î£¬È·±£ÏûÏ¢Ö»ÓĞÒ»´Îµ½´ï¡£¼´£º£½1¡£ÔÚÒ»Ğ©ÒªÇó±È½ÏÑÏ¸ñµÄ¼Æ·ÑÏµÍ³ÖĞ£¬¿ÉÒÔÊ¹ÓÃ´Ë¼¶±ğ
+    *    æœ€å¤šä¸€æ¬¡ï¼Œè¿™ä¸€çº§åˆ«ä¼šå‘ç”Ÿæ¶ˆæ¯ä¸¢å¤±æˆ–é‡å¤ï¼Œæ¶ˆæ¯å‘å¸ƒä¾èµ–äºåº•å±‚TCP/IPç½‘ç»œã€‚å³ï¼š<=1
+    *    è‡³å¤šä¸€æ¬¡ï¼Œè¿™ä¸€çº§åˆ«ä¼šç¡®ä¿æ¶ˆæ¯åˆ°è¾¾ï¼Œä½†æ¶ˆæ¯å¯èƒ½ä¼šé‡å¤ã€‚å³ï¼š>=1
+    *    åªæœ‰ä¸€æ¬¡ï¼Œç¡®ä¿æ¶ˆæ¯åªæœ‰ä¸€æ¬¡åˆ°è¾¾ã€‚å³ï¼šï¼1ã€‚åœ¨ä¸€äº›è¦æ±‚æ¯”è¾ƒä¸¥æ ¼çš„è®¡è´¹ç³»ç»Ÿä¸­ï¼Œå¯ä»¥ä½¿ç”¨æ­¤çº§åˆ«
     */
     u8_t qos = 1; /* 0 1 or 2, see MQTT specification */
     
-    //=0 µÄÒâË¼Ó¦¸ÃÊÇ²»±£ÁôÓĞĞ§¸ºÔØ£¨ÓĞĞ§Êı¾İ£©
+    //=0 çš„æ„æ€åº”è¯¥æ˜¯ä¸ä¿ç•™æœ‰æ•ˆè´Ÿè½½ï¼ˆæœ‰æ•ˆæ•°æ®ï¼‰
     u8_t retain = 0; /* No don't retain such crappy payload... */
     //temp = LM75A_ReadTemperature();
     //printf("temp:%d.%d\r\n", temp/100, temp%100);
@@ -256,7 +256,7 @@ void example_publish(mqtt_client_t *client, void *arg)
 }
 
 /* Called when publish is complete either with sucess or failure */
-//ÍÆËÍÏûÏ¢Íê³Éºó µÄ »Øµ÷º¯Êı
+//æ¨é€æ¶ˆæ¯å®Œæˆå çš„ å›è°ƒå‡½æ•°
 void mqtt_pub_request_cb(void *arg, err_t result)
 {
     if(result != ERR_OK)
