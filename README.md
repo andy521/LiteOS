@@ -8,5 +8,12 @@
 
 ## LiteOS 系统初始化流程
 ![](./doc/LiteOS_System_initialization.png)
+
+1. liteos
+2. mqtt server
+3. mqtt web client
+4. mqtt electron desktop app
+5. weapp 微信小程序
+
 ## 开源协议
 * 遵循MIT开源许可协议
