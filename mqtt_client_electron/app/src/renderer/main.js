@@ -4,6 +4,10 @@ import axios from 'axios'
 import App from './App'
 import router from './router'
 import store from './store'
+import ECharts from 'vue-echarts'
+
+console.log(ECharts)
+Vue.use(ECharts)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
