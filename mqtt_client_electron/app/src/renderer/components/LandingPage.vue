@@ -2,90 +2,120 @@
   <div id="wrapper">
     <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
     <main>
-    <chart :options="polar"></chart>
-      <!-- <div class="left-side">
-        <span class="title">
-          Welcome to your new project!
-        </span>
-        <system-information></system-information>
-      </div>
-
-      <div class="right-side">
-        <div class="doc">
-          <div class="title">Getting Started</div>
-          <p>
-            electron-vue comes packed with detailed documentation that covers everything from
-            internal configurations, using the project structure, building your application,
-            and so much more.
-          </p>
-          <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
-        </div>
-        <div class="doc">
-          <div class="title alt">Other Documentation</div>
-          <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-          <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
-        </div>
-      </div> -->
+      <chart :options="line"></chart>
     </main>
   </div>
 </template>
 
 <script>
   import SystemInformation from './LandingPage/SystemInformation'
+  import ECharts from 'vue-echarts/components/ECharts.vue'
 
-  // import ECharts modules manually to reduce bundle size
-  // import 'echarts/lib/chart/bar'
-  // import 'echarts/lib/component/tooltip'
+  import 'echarts/lib/chart/bar'
+  import 'echarts/lib/chart/line'
+  import 'echarts/lib/chart/pie'
+  import 'echarts/lib/chart/map'
+  import 'echarts/lib/chart/radar'
+  import 'echarts/lib/chart/scatter'
+  import 'echarts/lib/chart/effectScatter'
+  import 'echarts/lib/component/tooltip'
+  import 'echarts/lib/component/polar'
+  import 'echarts/lib/component/geo'
+  import 'echarts/lib/component/legend'
+  import 'echarts/lib/component/title'
+  import 'echarts/lib/component/visualMap'
 
   export default {
     name: 'landing-page',
-    components: { SystemInformation },
+    components: {
+      SystemInformation,
+      chart: ECharts
+    },
     methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
-      }
     },
     data: function () {
-      let data = []
+      var base = +new Date(1968, 9, 3)
+      var oneDay = 24 * 3600 * 1000
+      var date = []
 
-      for (let i = 0; i <= 360; i++) {
-        let t = i / 180 * Math.PI
-        let r = Math.sin(2 * t) * Math.cos(2 * t)
-        data.push([r, i])
+      var data = [Math.random() * 300]
+
+      for (var i = 1; i < 20000; i++) {
+        var now = new Date(base += oneDay)
+        date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'))
+        data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]))
       }
-
       return {
-        polar: {
-          title: {
-            text: '极坐标双数值轴'
-          },
-          legend: {
-            data: ['line']
-          },
-          polar: {
-            center: ['50%', '54%']
-          },
+        line: {
           tooltip: {
             trigger: 'axis',
-            axisPointer: {
-              type: 'cross'
+            position: function (pt) {
+              return [pt[0], '10%']
             }
           },
-          angleAxis: {
+          title: {
+            left: 'center',
+            text: 'IOT 设备温度'
+          },
+          toolbox: {
+            feature: {
+              dataZoom: {
+                yAxisIndex: 'none'
+              },
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: date
+          },
+          yAxis: {
             type: 'value',
-            startAngle: 0
+            boundaryGap: [0, '100%']
           },
-          radiusAxis: {
-            min: 0
-          },
-          series: [{
-            coordinateSystem: 'polar',
-            name: 'line',
-            type: 'line',
-            showSymbol: false,
-            data: data
+          dataZoom: [{
+            type: 'inside',
+            start: 0,
+            end: 10
+          }, {
+            start: 0,
+            end: 10,
+            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+            handleSize: '80%',
+            handleStyle: {
+              color: '#fff',
+              shadowBlur: 3,
+              shadowColor: 'rgba(0, 0, 0, 0.6)',
+              shadowOffsetX: 2,
+              shadowOffsetY: 2
+            }
           }],
-          animationDuration: 2000
+          series: [{
+            name: '模拟数据',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+              normal: {
+                color: 'rgb(255, 70, 131)'
+              }
+            },
+            areaStyle: {
+              normal: {
+                // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                //   offset: 0,
+                //   color: 'rgb(255, 158, 68)'
+                // }, {
+                //   offset: 1,
+                //   color: 'rgb(255, 70, 131)'
+                // }])
+              }
+            },
+            data: data
+          }]
         }
       }
     }
@@ -102,7 +132,8 @@
   }
 
   .echarts {
-    height: 300px;
+    width: 500%;
+    height: 500px;
   }
   /* body { font-family: 'Source Sans Pro', sans-serif; } */
 

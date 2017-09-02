@@ -6,10 +6,13 @@
 
 <script>
   export default {
-    name: 'app'
+    name: 'app',
+    components: {
+    }
   }
 </script>
 
 <style>
   /* CSS */
+  
 </style>
