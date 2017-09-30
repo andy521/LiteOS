@@ -132,7 +132,7 @@
   }
 
   .echarts {
-    width: 500%;
+    width: 500px;
     height: 500px;
   }
   /* body { font-family: 'Source Sans Pro', sans-serif; } */
